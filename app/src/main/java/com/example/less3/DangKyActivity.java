@@ -167,4 +167,7 @@ public class DangKyActivity extends AppCompatActivity {
                     }
                 }
             });
+    public void setEdname(){
+
+    }
 }
