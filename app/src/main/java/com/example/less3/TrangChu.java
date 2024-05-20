@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -28,8 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.less3.adapter.SinhvienAdapter;
-import com.example.less3.model.Sinhvien;
+import com.example.less3.adapter.ClothesAdapter;
+import com.example.less3.model.Clothes;
 import com.example.less3.retrofit.ApiService;
 import com.example.less3.retrofit.Config;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -57,18 +56,18 @@ public class TrangChu extends AppCompatActivity {
     Dialog dialog;
     RecyclerView recyclerView;
 
-    List<Sinhvien> list;
+    List<Clothes> list;
 
-    SinhvienAdapter sinhvienAdapter;
+    ClothesAdapter sinhvienAdapter;
     FloatingActionButton fab;
     ApiService apiService;
     EditText search;
-    SinhvienAdapter adapter;
+    ClothesAdapter adapter;
     ImageView anh;
     EditText edtten, edttuoi, edtmssv;
     File file;
     MultipartBody.Part multipartBody;
-    Sinhvien svien;
+    Clothes svien;
     Uri uri;
 
     @SuppressLint("NonConstantResourceId")
@@ -116,14 +115,14 @@ public class TrangChu extends AppCompatActivity {
         findViewById(R.id.btngiam).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<List<Sinhvien>> call = apiService.getGiam();
-                call.enqueue(new Callback<List<Sinhvien>>() {
+                Call<List<Clothes>> call = apiService.getGiam();
+                call.enqueue(new Callback<List<Clothes>>() {
                     @Override
-                    public void onResponse(Call<List<Sinhvien>> call, Response<List<Sinhvien>> response) {
+                    public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
                         if (response.isSuccessful()) {
                             list = response.body();
 
-                            adapter = new SinhvienAdapter(list, getApplicationContext(), TrangChu.this);
+                            adapter = new ClothesAdapter(list, getApplicationContext(), TrangChu.this);
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(TrangChu.this));
                             recyclerView.setAdapter(adapter);
@@ -132,7 +131,7 @@ public class TrangChu extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Sinhvien>> call, Throwable t) {
+                    public void onFailure(Call<List<Clothes>> call, Throwable t) {
                         Log.e("Main", t.getMessage());
                     }
                 });
@@ -143,14 +142,14 @@ public class TrangChu extends AppCompatActivity {
         findViewById(R.id.btntang).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Call<List<Sinhvien>> call = apiService.getTang();
-                call.enqueue(new Callback<List<Sinhvien>>() {
+                Call<List<Clothes>> call = apiService.getTang();
+                call.enqueue(new Callback<List<Clothes>>() {
                     @Override
-                    public void onResponse(Call<List<Sinhvien>> call, Response<List<Sinhvien>> response) {
+                    public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
                         if (response.isSuccessful()) {
                             list = response.body();
 
-                            adapter = new SinhvienAdapter(list, getApplicationContext(), TrangChu.this);
+                            adapter = new ClothesAdapter(list, getApplicationContext(), TrangChu.this);
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(TrangChu.this));
                             recyclerView.setAdapter(adapter);
@@ -159,7 +158,7 @@ public class TrangChu extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Sinhvien>> call, Throwable t) {
+                    public void onFailure(Call<List<Clothes>> call, Throwable t) {
                         Log.e("Main", t.getMessage());
                     }
                 });
@@ -170,22 +169,22 @@ public class TrangChu extends AppCompatActivity {
     }
 
     void loadData() {
-        Call<List<Sinhvien>> call = apiService.getSinhviens();
+        Call<List<Clothes>> call = apiService.getClothes();
 
-        call.enqueue(new Callback<List<Sinhvien>>() {
+        call.enqueue(new Callback<List<Clothes>>() {
             @Override
-            public void onResponse(Call<List<Sinhvien>> call, Response<List<Sinhvien>> response) {
+            public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
                 if (response.isSuccessful()) {
                     list = response.body();
                     Log.d(TAG, "onResponse: "+list);
-                    sinhvienAdapter = new SinhvienAdapter(list, TrangChu.this, TrangChu.this);
+                    sinhvienAdapter = new ClothesAdapter(list, TrangChu.this, TrangChu.this);
                     recyclerView.setLayoutManager(new LinearLayoutManager(TrangChu.this));
                     recyclerView.setAdapter(sinhvienAdapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Sinhvien>> call, Throwable t) {
+            public void onFailure(Call<List<Clothes>> call, Throwable t) {
                 Log.d("111","lỗi:" + t.getMessage());
             }
         });
@@ -200,13 +199,13 @@ public class TrangChu extends AppCompatActivity {
         }
     }
 
-    public void add(Context context, int type, Sinhvien sv) {
+    public void add(Context context, int type, Clothes sv) {
         Dialog dialog = new Dialog(TrangChu.this);
         dialog.setContentView(R.layout.dialog_updatesv);
 
         edtten = dialog.findViewById(R.id.upName);
-        edttuoi = dialog.findViewById(R.id.upAge);
-        edtmssv = dialog.findViewById(R.id.upMSSV);
+        edttuoi = dialog.findViewById(R.id.upgia);
+        edtmssv = dialog.findViewById(R.id.upbrand);
         anh = dialog.findViewById(R.id.btn_upload);
 
         anh.setOnClickListener(new View.OnClickListener() {
@@ -217,14 +216,14 @@ public class TrangChu extends AppCompatActivity {
         });
 
         if (type != 0) {
-            edtten.setText(sv.getName());
-            edttuoi.setText(sv.getTuoi() + "");
-            edtmssv.setText(sv.getMssv());
+            edtten.setText(sv.getName_cloth());
+            edttuoi.setText(sv.getPrice_cloth() + "");
+            edtmssv.setText(sv.getBrand());
             Glide.with(context)
-                    .load(sv.getImage())
+                    .load(sv.getImage_cloth())
                     .thumbnail(Glide.with(context).load(R.drawable.img_10))
                     .into(anh);
-            Log.d(TAG, "them: " + sv.getImage());
+            Log.d(TAG, "them: " + sv.getImage_cloth());
         }
         dialog.findViewById(R.id.btnSave).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,10 +254,10 @@ public class TrangChu extends AppCompatActivity {
 
                     if (_age > 0) {
                         if (type == 0) {
-                            Call<Sinhvien> call = apiService.AddSinhViens(mapRequestBody, multipartBody);
-                            call.enqueue(new Callback<Sinhvien>() {
+                            Call<Clothes> call = apiService.AddClothes(mapRequestBody, multipartBody);
+                            call.enqueue(new Callback<Clothes>() {
                                 @Override
-                                public void onResponse(Call<Sinhvien> call, Response<Sinhvien> response) {
+                                public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                                     if (response.isSuccessful()) {
                                         loadData();
                                         Toast.makeText(TrangChu.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -269,7 +268,7 @@ public class TrangChu extends AppCompatActivity {
                                 }
 
                                 @Override
-                                public void onFailure(Call<Sinhvien> call, Throwable t) {
+                                public void onFailure(Call<Clothes> call, Throwable t) {
                                     Log.e("Home", "Call failed: " + t.toString());
                                     Toast.makeText(TrangChu.this, "Đã xảy ra lỗi khi thêm dữ liệu", Toast.LENGTH_SHORT).show();
                                 }
@@ -277,10 +276,10 @@ public class TrangChu extends AppCompatActivity {
                             });
                         } else {
                             if (multipartBody != null) {
-                                Call<Sinhvien> call = apiService.updateSinhViens(mapRequestBody, sv.get_id(), multipartBody);
-                                call.enqueue(new Callback<Sinhvien>() {
+                                Call<Clothes> call = apiService.updateClothes(mapRequestBody, sv.get_id(), multipartBody);
+                                call.enqueue(new Callback<Clothes>() {
                                     @Override
-                                    public void onResponse(Call<Sinhvien> call, Response<Sinhvien> response) {
+                                    public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                                         if (response.isSuccessful()) {
                                             loadData();
                                             Toast.makeText(TrangChu.this, "Sửa thành công", Toast.LENGTH_SHORT).show();
@@ -291,17 +290,17 @@ public class TrangChu extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Sinhvien> call, Throwable t) {
+                                    public void onFailure(Call<Clothes> call, Throwable t) {
                                         Log.e("Home", "Call failed: " + t.toString());
                                         Toast.makeText(TrangChu.this, "Đã xảy ra lỗi khi sửa dữ liệu", Toast.LENGTH_SHORT).show();
                                     }
 
                                 });
                             } else {
-                                Call<Sinhvien> call = apiService.updateNoImage(mapRequestBody, sv.get_id());
-                                call.enqueue(new Callback<Sinhvien>() {
+                                Call<Clothes> call = apiService.updateNoImage(mapRequestBody, sv.get_id());
+                                call.enqueue(new Callback<Clothes>() {
                                     @Override
-                                    public void onResponse(Call<Sinhvien> call, Response<Sinhvien> response) {
+                                    public void onResponse(Call<Clothes> call, Response<Clothes> response) {
                                         if (response.isSuccessful()) {
                                             loadData();
                                             Toast.makeText(TrangChu.this, "Sửa thành công no image", Toast.LENGTH_SHORT).show();
@@ -312,7 +311,7 @@ public class TrangChu extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Sinhvien> call, Throwable t) {
+                                    public void onFailure(Call<Clothes> call, Throwable t) {
                                         Log.e("Home", "Call failed: " + t.toString());
                                         Toast.makeText(TrangChu.this, "Đã xảy ra lỗi khi sửa dữ liệu", Toast.LENGTH_SHORT).show();
                                     }
@@ -401,7 +400,7 @@ public class TrangChu extends AppCompatActivity {
 
 
     public void xoa(String id) {
-        Call<Void> call = apiService.deleteSinhViens(id);
+        Call<Void> call = apiService.deleteClothes(id);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -421,21 +420,21 @@ public class TrangChu extends AppCompatActivity {
     }
 
     private void searchDistributor(String keyword) {
-        Call<List<Sinhvien>> call = apiService.searchCay(keyword);
-        call.enqueue(new Callback<List<Sinhvien>>() {
+        Call<List<Clothes>> call = apiService.searchCay(keyword);
+        call.enqueue(new Callback<List<Clothes>>() {
             @Override
-            public void onResponse(Call<List<Sinhvien>> call, Response<List<Sinhvien>> response) {
+            public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
                 if (response.isSuccessful()) {
                     list = response.body();
 
-                    adapter = new SinhvienAdapter(list, getApplicationContext(), TrangChu.this);
+                    adapter = new ClothesAdapter(list, getApplicationContext(), TrangChu.this);
                     recyclerView.setLayoutManager(new LinearLayoutManager(TrangChu.this));
                     recyclerView.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Sinhvien>> call, Throwable t) {
+            public void onFailure(Call<List<Clothes>> call, Throwable t) {
                 Log.e("Search", "Search failed: " + t.toString());
                 Toast.makeText(TrangChu.this, "Đã xảy ra lỗi kh tìm kiếm", Toast.LENGTH_SHORT).show();
             }

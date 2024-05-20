@@ -1,6 +1,6 @@
 package com.example.less3.retrofit;
 
-import com.example.less3.model.Sinhvien;
+import com.example.less3.model.Clothes;
 import com.example.less3.model.User;
 
 import java.util.List;
@@ -24,18 +24,18 @@ import retrofit2.http.Query;
 public interface ApiService {
     String DOMAIN = "http://10.0.2.2:3000/";
     @GET("/")
-    Call<List<Sinhvien>> getSinhviens();
+    Call<List<Clothes>> getClothes();
     @Multipart
-    @POST("/add_sv")
-    Call<Sinhvien> AddSinhViens(@PartMap Map<String, RequestBody> requestBodyMap,
-                                @Part MultipartBody.Part imageSinhVien);
+    @POST("/add_cloth")
+    Call<Clothes> AddClothes(@PartMap Map<String, RequestBody> requestBodyMap,
+                               @Part MultipartBody.Part imageSinhVien);
     @Multipart
     @PUT("/update/{id}")
-    Call<Sinhvien> updateSinhViens(@PartMap Map<String, RequestBody> requestBodyMap,
-                                   @Path("id") String id,
-                                   @Part MultipartBody.Part imageSinhVien);
+    Call<Clothes> updateClothes(@PartMap Map<String, RequestBody> requestBodyMap,
+                                  @Path("id") String id,
+                                  @Part MultipartBody.Part imageSinhVien);
     @DELETE("/delete/{id}")
-    Call<Void> deleteSinhViens(@Path("id") String id);
+    Call<Void> deleteClothes(@Path("id") String id);
 
     @Multipart
     @POST("/register-send-email")
@@ -50,14 +50,14 @@ public interface ApiService {
     Call<Response<User>> login (@Body User user);
     @Multipart
     @PUT("/update-no-image/{id}")
-    Call<Sinhvien> updateNoImage(@PartMap Map<String, RequestBody> requestBodyMap,
-                               @Path("id") String id
+    Call<Clothes> updateNoImage(@PartMap Map<String, RequestBody> requestBodyMap,
+                                @Path("id") String id
     );
     @GET("/search")
-    Call<List<Sinhvien>> searchCay(@Query("key") String query);
+    Call<List<Clothes>> searchCay(@Query("key") String query);
     @GET("/giam-dan")
-    Call<List<Sinhvien>> getGiam();
+    Call<List<Clothes>> getGiam();
 
     @GET("/tang-dan")
-    Call<List<Sinhvien>> getTang();
+    Call<List<Clothes>> getTang();
 }
