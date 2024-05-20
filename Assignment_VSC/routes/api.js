@@ -95,4 +95,4 @@ routes.get('/get-fruit-by-id/:id',async  (req, res)=>{
     console.log(error);
   }
 })
-module.exports = routes.post('/upload',objUpload.single('hinh_anh'),upload)
+module.exports = routes.post('/upload',objUpload.single('image_cloth'),upload)
