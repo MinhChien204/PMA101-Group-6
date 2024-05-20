@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const app = express();
 const upload = require("./config/Upload");
 const uri =
-  "mongodb+srv://nmchien2204:chien1234@cluster0.4b0kubq.mongodb.net/md18305";
+  "mongodb+srv://nmchien2204:chien1234@cluster0.4b0kubq.mongodb.net/pma101";
 const users = require("./models/user");
 
-const svModel = require("./studentModel");
+const cloModel = require("./clothesModel");
 const apiRouter = require("./api");
 
 app.use(express.json());
@@ -27,36 +27,39 @@ mongoose
 
 app.get("/", async (req, res) => {
 try {
-  let svien = await svModel.find();
-  res.send(svien);
+  let cloth = await cloModel.find();
+  res.send(cloth);
 } catch (error) {
   console.log("lỗi ");
 }
 });
 
-app.post("/add_sv", upload.single("image"), async (req, res) => {
+app.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
   try { 
     const data = req.body;
     const { file } = req;
     const urlsImage =  `${req.protocol}://${req.get("host")}/uploads/${file.filename}`
   
-    const newStudent = new svModel({
-      name: data.name,
-      tuoi: data.tuoi,
-      mssv: data.mssv,
-      image: urlsImage,
+    const newClothes = new cloModel({
+      image_cloth: urlsImage,
+      name_cloth: data.name_cloth,
+      price_cloth: data.price_cloth,
+      brand: data.brand,
+      chatlieu: data.chatlieu,
+      mota: data.mota,
+      tinhtrang: data.tinhtrang,
     });
 
-    await newStudent.save();
-
-    res.send(newStudent);
+    await newClothes.save();
+ 
+    res.send(newClothes);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
   }
 });
 
-app.put("/update/:id", upload.single("image"), async (req, res) => {
+app.put("/update/:id", upload.single("image_cloth"), async (req, res) => {
   try {
     const data = req.body;
     const studentId = req.params.id;
@@ -66,23 +69,26 @@ app.put("/update/:id", upload.single("image"), async (req, res) => {
       file.filename
     }`;
 
-    const updatedStudent = await svModel.findByIdAndUpdate(studentId, {
-      name: data.name,
-      tuoi: data.tuoi,
-      mssv: data.mssv,
-      image: imageUrl,
+    const updatedCloth = await cloModel.findByIdAndUpdate(studentId, {
+      image_cloth: imageUrl,
+      name_cloth: data.name_cloth,
+      price_cloth: data.price_cloth,
+      brand: data.brand,
+      chatlieu: data.chatlieu,
+      mota: data.mota,
+      tinhtrang: data.tinhtrang,
     });
 
-    if (updatedStudent) {
+    if (updatedCloth) {
       res.json({
         status: 200,
         message: "Cập nhật thành công",
-        data: updatedStudent,
+        data: updatedCloth,
       });
     } else {
       res.json({
         status: 400,
-        message: "Không tìm thấy sinh viên",
+        message: "Không tìm thấy quần áo",
         data: [],
       });
     }
@@ -95,10 +101,10 @@ app.put("/update/:id", upload.single("image"), async (req, res) => {
 app.delete("/delete/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    await svModel.deleteOne({ _id: id });
-    const sinhviens = await svModel.find();
-    console.log(sinhviens);
-    res.send(sinhviens);
+    await cloModel.deleteOne({ _id: id });
+    const cloth = await cloModel.find();
+    console.log(cloth);
+    res.send(cloth);
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal Server Error");
@@ -111,7 +117,7 @@ app.post("/register-send-email", upload.single("avartar"), async (req, res) => {
     const { file } = req;
     const avatar = `${req.protocol}://${req.get("host")}/uploads/${
       file.filename
-    }`;
+    }`; 
     const newUser = users({
       username: data.username,
       password: data.password,
@@ -159,15 +165,18 @@ app.post("/login", async (req, res) => {
     console.log(error);
   }
 });
-app.put("/update-no-image/:id", upload.array("image", 5), async (req, res) => {
+app.put("/update-no-image/:id", upload.array("image_cloth", 5), async (req, res) => {
   try {
     const svId = req.params.id;
     const data = req.body;
 
-    const result = await svModel.findByIdAndUpdate(svId, {
-      name: data.name,
-      tuoi: data.tuoi,
-      mssv: data.mssv,
+    const result = await cloModel.findByIdAndUpdate(svId, {
+      name_cloth: data.name_cloth,
+      price_cloth: data.price_cloth,
+      brand: data.brand,
+      chatlieu: data.chatlieu,
+      mota: data.mota,
+      tinhtrang: data.tinhtrang,
     });
 
     if (result) { 
@@ -179,7 +188,7 @@ app.put("/update-no-image/:id", upload.array("image", 5), async (req, res) => {
     } else {
       res.status(404).json({
         status: 404,
-        messenger: "Không tìm thấy sinh viên",
+        messenger: "Không tìm thấy quần áo",
         data: [],
       });
     }
@@ -187,7 +196,7 @@ app.put("/update-no-image/:id", upload.array("image", 5), async (req, res) => {
     console.log(error);
     res.status(500).json({
       status: 500,
-      messenger: "Lỗi, không thể cập nhật sinh viên",
+      messenger: "Lỗi, không thể cập nhật quần áo",
       data: [],
     });
   }
@@ -197,8 +206,8 @@ app.get("/search", async (req, res) => {
   try {
     const tuKhoa = req.query.key;
 
-    const ketQuaTimKiem = await svModel.find({
-      name: { $regex: new RegExp(tuKhoa, "i") },
+    const ketQuaTimKiem = await cloModel.find({
+      name_cloth: { $regex: new RegExp(tuKhoa, "i") },
     });
 
     if (ketQuaTimKiem.length > 0) {
@@ -211,40 +220,40 @@ app.get("/search", async (req, res) => {
   }
 });
 
-const sapxepgiamdan = (products) => {
-  return products.sort((a, b) => b.tuoi - a.tuoi);
-};
+// const sapxepgiamdan = (products) => {
+//   return products.sort((a, b) => b.tuoi - a.tuoi);
+// };
 
-app.get("/giam-dan", async (req, res) => {
-  try {
-    let svien = await svModel.find();
-    let sortedProducts = sapxepgiamdan(svien);
-    res.json(sortedProducts);
-  } catch (error) {
-    console.error(
-      "Lỗi khi sắp xếp danh sách sản phẩm theo giá tăng dần:",
-      error
-    );
-    res.status(500).send("Đã xảy ra lỗi khi sắp xếp danh sách sản phẩm");
-  }
-});
+// app.get("/giam-dan", async (req, res) => {
+//   try {
+//     let svien = await cloModel.find();
+//     let sortedProducts = sapxepgiamdan(svien);
+//     res.json(sortedProducts);
+//   } catch (error) {
+//     console.error(
+//       "Lỗi khi sắp xếp danh sách sản phẩm theo giá tăng dần:",
+//       error
+//     );
+//     res.status(500).send("Đã xảy ra lỗi khi sắp xếp danh sách sản phẩm");
+//   }
+// });
 
-const sapxeptangdan = (products) => {
-  return products.sort((a, b) => a.tuoi - b.tuoi);
-};
+// const sapxeptangdan = (products) => {
+//   return products.sort((a, b) => a.tuoi - b.tuoi);
+// };
 
-app.get("/tang-dan", async (req, res) => {
-  try {
-    let svien = await svModel.find();
-    let sortedProducts = sapxeptangdan(svien);
-    res.json(sortedProducts);
-  } catch (error) {
-    console.error(
-      "Lỗi khi sắp xếp danh sách sản phẩm theo giá giảm dần:",
-      error
-    );
-    res.status(500).send("Đã xảy ra lỗi khi sắp xếp danh sách sản phẩm");
-  }
-});
+// app.get("/tang-dan", async (req, res) => {
+//   try {
+//     let svien = await cloModel.find();
+//     let sortedProducts = sapxeptangdan(svien);
+//     res.json(sortedProducts);
+//   } catch (error) {
+//     console.error(
+//       "Lỗi khi sắp xếp danh sách sản phẩm theo giá giảm dần:",
+//       error
+//     );
+//     res.status(500).send("Đã xảy ra lỗi khi sắp xếp danh sách sản phẩm");
+//   }
+// });
 
 module.exports = app;
