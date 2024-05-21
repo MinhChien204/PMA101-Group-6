@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,18 +9,20 @@
     tools:context=".DangNhapActivity">
 
     <ImageView
-        android:layout_width="410dp"
+        android:layout_width="400dp"
         android:layout_height="150dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/img_4" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Your Account"
+        android:text="Login to your account"
         android:layout_gravity="center"
         android:textSize="30dp"
+        android:layout_marginTop="7dp"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +59,9 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleDrawable="@drawable/password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txt_password"
@@ -68,11 +73,11 @@
                 android:hint="password"
                 android:padding="15dp"
                 android:textColor="@color/black"
+
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
-
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -81,29 +86,53 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@drawable/khung_edit"
-        android:backgroundTint="#8962"
+        android:backgroundTint="#88C3BFBF"
         android:text="Login"
         android:textSize="20dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_facebook"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="5dp"
-        android:text="--------------------------------------------Or--------------------------------------------"
-        android:textSize="15dp"
-        tools:ignore="TextSizeCheck" />
+        android:layout_marginTop="30dp"
+        android:background="@drawable/khung_edit"
+        android:backgroundTint="#880C0707"
+        android:text="Tiếp tục với Facebook"
+        android:textSize="20dp" />
 
 
 
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:text="Bạn chưa có tài khoản?Đăng kí ngay"
-        android:textColor="@color/black"
-        android:textSize="18dp"
-        android:textStyle="italic" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#88D1CCC7"
+        android:layout_marginTop="70dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text="Bạn chưa có tài khoản?"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text=" Đăng ký ngay"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
 </LinearLayout>

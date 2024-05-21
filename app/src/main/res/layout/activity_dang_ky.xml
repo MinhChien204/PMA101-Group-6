@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Đăng ký tài khoản"
+        android:layout_gravity="center"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -83,12 +84,13 @@
         android:id="@+id/btndangnhapdk"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#8962"
-        android:text="ĐĂNG KÝ"
-        android:textColor="@color/white"
+        android:background="@drawable/khung_edit"
+        android:text="Đăng Ký"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="21dp"
         android:layout_marginTop="25dp"
+
         />
 
 </LinearLayout>
