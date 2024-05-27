@@ -78,6 +78,7 @@
                 android:text="Giá Khuyến Mãi: "/>
 
             <TextView
+                android:id="@+id/CTSP_gia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5000"/>
@@ -95,6 +96,7 @@
                 android:text="Combo khuyến mại: "/>
 
             <TextView
+                android:id="@+id/CTSP_cb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXXXX"/>
@@ -120,6 +122,7 @@
                 android:text="Thuong Hiệu: "/>
 
             <TextView
+                android:id="@+id/CTSP_th"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXXXX"/>
@@ -136,6 +139,7 @@
                 android:text="Chất Liệu: "/>
 
             <TextView
+                android:id="@+id/CTSP_cl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXXXX"/>
@@ -152,6 +156,7 @@
                 android:text="Kho Hàng: "/>
 
             <TextView
+                android:id="@+id/CTSP_kh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="XXXXXX"/>
