@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activity_ChiTietSP"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_Home"
+            android:exported="false" />
+        <activity
             android:name=".gioHang"
             android:exported="false" />
         <activity

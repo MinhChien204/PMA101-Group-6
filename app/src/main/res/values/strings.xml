@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Less 3</string>
+    <string name="app_name">Clothing Shop</string>
+    <string name="menu">Menu</string>
+    <string name="logo">Logo</string>
+    <string name="cart">Cart</string>
+    <string name="shirts">Shirts</string>
+    <string name="dresses">Dresses</string>
+    <string name="pants">Pants</string>
+    <string name="shoes">Shoes</string>
+    <string name="accessories">Accessories</string>
+    <string name="sample_product">Sample Product</string>
 </resources>
