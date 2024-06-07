@@ -2,13 +2,15 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const app = express();
-const upload = require("./config/Upload");
+const upload = require("./config/Upload");  
 const uri =
   "mongodb+srv://nmchien2204:chien1234@cluster0.4b0kubq.mongodb.net/pma101";
 const users = require("./models/user");
 
 const cloModel = require("./clothesModel");
 const apiRouter = require("./api");
+const { type } = require("os");
+const typeModel = require("./models/type");
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads"))); // Serve uploaded files
@@ -25,6 +27,18 @@ mongoose
   .then(() => console.log("Connect success"))
   .catch((err) => console.log("Connect failed:", err));
 
+
+  //Thể Loại
+  app.get("/type", async (req, res) => {
+	try {
+	  let type = await typeModel.find();
+	  res.send(type);
+	} catch (error) {
+	  console.log("lỗi ");
+	}
+	});
+
+//Sản Phẩm
 app.get("/", async (req, res) => {
 try {
   let cloth = await cloModel.find();
@@ -123,6 +137,8 @@ app.post("/register-send-email", upload.single("avartar"), async (req, res) => {
       password: data.password,
       email: data.email,
       name: data.name,
+      phonenumber:data.phonenumber,
+      address:data.address,
       avartar: avatar,
     });
     const result = await newUser.save();
@@ -169,7 +185,6 @@ app.put("/update-no-image/:id", upload.array("image_cloth", 5), async (req, res)
   try {
     const svId = req.params.id;
     const data = req.body;
-
     const result = await cloModel.findByIdAndUpdate(svId, {
       name_cloth: data.name_cloth,
       price_cloth: data.price_cloth,
