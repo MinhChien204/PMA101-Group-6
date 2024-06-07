@@ -19,22 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Activity_ChiTietSP"
+            android:name=".activity.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity_Home"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".gioHang"
+            android:name=".activity.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".thanhToan"
-            android:exported="false" />
-        <activity
-            android:name=".TrangChu"
-            android:exported="true" />
-        <activity
-            android:name=".DangNhapActivity"
+            android:name=".activity.DangNhapActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DangKyActivity"
+            android:name=".activity.DangKyActivity"
             android:exported="true" />
     </application>
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.less3.R;
-import com.example.less3.TrangChu;
+import com.example.less3.fragment.HomeFragment;
 import com.example.less3.model.Clothes;
 
 import java.util.List;
@@ -21,12 +21,12 @@ import java.util.List;
 public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ViewHolder> {
     List<Clothes> list;
     Context context;
-    TrangChu trangChu;
+    HomeFragment homeFragment;
 
-    public ClothesAdapter(List<Clothes> list, Context context, TrangChu trangChu) {
+    public ClothesAdapter(List<Clothes> list, Context context, HomeFragment homeFragment) {
         this.list = list;
         this.context = context;
-        this.trangChu = trangChu;
+        this.homeFragment = homeFragment;
     }
 
     @NonNull
@@ -47,18 +47,6 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ViewHold
                 .load(sv.getImage_cloth())
                 .thumbnail(Glide.with(context).load(R.drawable.img_10))
                 .into(holder.image);
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trangChu.xoa(sv.get_id());
-            }
-        });
-        holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                trangChu.add(context, 1, sv);
-            }
-        });
     }
 
     @Override
@@ -77,8 +65,8 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ViewHold
             tvten = itemView.findViewById(R.id.tvName);
             tvgia = itemView.findViewById(R.id.tvprice);
             tvbrand = itemView.findViewById(R.id.tvbrand);
-            btnDelete = itemView.findViewById(R.id.btnDeleteSv);
-            btnUpdate = itemView.findViewById(R.id.btn_EditSv);
+//            btnDelete = itemView.findViewById(R.id.btnDeleteSv);
+//            btnUpdate = itemView.findViewById(R.id.btn_EditSv);
         }
     }
 }
