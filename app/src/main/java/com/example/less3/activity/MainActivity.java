@@ -22,7 +22,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+     public BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout;
 
     @Override
@@ -57,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void replace(Fragment fragment) {
+    public void replace(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.framelayout, fragment);
+        transaction.addToBackStack(null); // Thêm Fragment vào Back Stack
         transaction.commit();
     }
+
 }

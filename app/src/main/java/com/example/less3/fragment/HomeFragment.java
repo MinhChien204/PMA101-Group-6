@@ -25,6 +25,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.less3.R;
+import com.example.less3.activity.MainActivity;
 import com.example.less3.adapter.ClothesAdapter;
 import com.example.less3.model.Clothes;
 import com.example.less3.retrofit.ApiService;
@@ -104,6 +105,9 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+
+
 
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {

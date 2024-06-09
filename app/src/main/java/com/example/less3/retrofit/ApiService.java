@@ -24,8 +24,10 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     String DOMAIN = "http://10.0.2.2:3000/";
-    @GET("/")
+    @GET("/product")
     Call<List<Clothes>> getClothes();
+    @GET("/product/{id}")
+    Call<Clothes> getClothDetails(@Path("id") String id);
     @GET("/type")
     Call<List<Type>> getType();
     @Multipart
