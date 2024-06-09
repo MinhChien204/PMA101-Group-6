@@ -7,17 +7,14 @@ const ClothSchema = mongoose.Schema({
   image_cloth:{
     type:String,
   },
+  brand: {
+    type: String,
+  },
   name_cloth: {
     type: String,
   },
   price_cloth: {
     type: Number,
-  },
-  brand: {
-    type: String,
-  },
-  chatlieu:{
-    type: String,
   },
   mota:{
     type: String,

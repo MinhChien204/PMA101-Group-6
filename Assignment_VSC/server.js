@@ -11,6 +11,7 @@ const cloModel = require("./clothesModel");
 const apiRouter = require("./api");
 const { type } = require("os");
 const typeModel = require("./models/type");
+const addressModel = require("./models/address");
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "public/uploads"))); // Serve uploaded files
@@ -38,14 +39,85 @@ mongoose
 	}
 	});
 
+  //Địa Chỉ
+  app.get("/address", async (req, res) => {
+	try {
+	  let address = await addressModel.find();
+	  res.send(address);
+	} catch (error) {
+	  console.log("lỗi ");
+	}
+	});
+
+    app.post("/add_address", async (req, res) => {
+        try {
+            const { nameAddress, phoneAddress, locationAddress } = req.body;
+     
+            // Validate the request body
+            if (!nameAddress || !phoneAddress || !locationAddress) {
+                return res.status(400).send({ error: "All fields are required" });
+            }
+    
+            // Create a new address document
+            let newAddress = new addressModel({
+                nameAddress,
+                phoneAddress,
+                locationAddress
+            });
+    
+            // Save the address to the database
+            await newAddress.save();
+    
+            // Send a success response
+            res.status(201).send(newAddress);
+        } catch (error) {
+            console.log("Error: ", error);
+            res.status(500).send({ error: "An error occurred while adding the address" });
+        }
+    });    
+
+    app.delete("/del_address/:id", async (req, res) => {
+        try {
+            const { id } = req.params;
+    
+            // Find the address by ID and delete it
+            let deletedAddress = await addressModel.findByIdAndDelete(id);
+    
+            if (!deletedAddress) {
+                return res.status(404).send({ error: "Address not found" });
+            }
+    
+            // Send a success response
+            res.status(200).send({ message: "Address deleted successfully" });
+        } catch (error) {
+            console.log("Error: ", error);
+            res.status(500).send({ error: "An error occurred while deleting the address" });
+        }
+    });
 //Sản Phẩm
-app.get("/", async (req, res) => {
+app.get("/product", async (req, res) => {
 try {
   let cloth = await cloModel.find();
-  res.send(cloth);
+  res.send(cloth); 
 } catch (error) {
   console.log("lỗi ");
 }
+});
+app.get("/product/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid ObjectId' });
+    }
+    const cloth = await cloModel.findById(id);
+    if (!cloth) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.send(cloth);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 app.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
@@ -56,12 +128,11 @@ app.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
   
     const newClothes = new cloModel({
       image_cloth: urlsImage,
+      brand: data.brand,
       name_cloth: data.name_cloth,
       price_cloth: data.price_cloth,
-      brand: data.brand,
-      chatlieu: data.chatlieu,
       mota: data.mota,
-      tinhtrang: data.tinhtrang,
+      tinhtrang: data.tinhtrang, 
     });
 
     await newClothes.save();
@@ -88,7 +159,6 @@ app.put("/update/:id", upload.single("image_cloth"), async (req, res) => {
       name_cloth: data.name_cloth,
       price_cloth: data.price_cloth,
       brand: data.brand,
-      chatlieu: data.chatlieu,
       mota: data.mota,
       tinhtrang: data.tinhtrang,
     });
@@ -189,7 +259,7 @@ app.put("/update-no-image/:id", upload.array("image_cloth", 5), async (req, res)
       name_cloth: data.name_cloth,
       price_cloth: data.price_cloth,
       brand: data.brand,
-      chatlieu: data.chatlieu,
+      quantity_cloth: data.quantity_cloth,
       mota: data.mota,
       tinhtrang: data.tinhtrang,
     });
