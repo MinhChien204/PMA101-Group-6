@@ -1,5 +1,6 @@
 package com.example.less3.retrofit;
 
+import com.example.less3.model.Address;
 import com.example.less3.model.Clothes;
 import com.example.less3.model.Type;
 import com.example.less3.model.User;
@@ -30,6 +31,8 @@ public interface ApiService {
     Call<Clothes> getClothDetails(@Path("id") String id);
     @GET("/type")
     Call<List<Type>> getType();
+    @GET("/address")
+    Call<List<Address>> getAddress();
     @Multipart
     @POST("/register-send-email")
     Call<Response<User>> register(
