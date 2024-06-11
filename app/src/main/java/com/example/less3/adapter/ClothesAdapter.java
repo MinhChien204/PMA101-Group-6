@@ -59,6 +59,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ViewHold
                 trangChu.add(context, 1, sv);
             }
         });
+
     }
 
     @Override
