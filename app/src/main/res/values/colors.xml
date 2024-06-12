@@ -3,5 +3,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#131313</color>
+    <color name="primary">#6200EE</color>
+    <color name="primary_light">#BB86FC</color>
+    <color name="primary_dark">#3700B3</color>
+    <color name="facebook">#3b5998</color>
+    <color name="facebook_light">#8b9dc3</color>
+    <color name="facebook_dark">#3b5998</color>
+    <color name="background_color">#F5F5F5</color>
 
+    <color name="white">#FFFFFF</color>
 </resources>
