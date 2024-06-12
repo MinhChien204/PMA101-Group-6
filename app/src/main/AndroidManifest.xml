@@ -39,6 +39,8 @@
         <activity
             android:name=".TrangChu"
             android:exported="true" />
+
+
         <activity
             android:name=".DangNhapActivity"
             android:exported="true">

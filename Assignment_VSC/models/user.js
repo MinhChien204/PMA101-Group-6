@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
+const mongoose = require( 'mongoose' )
 const Scheme = mongoose.Schema;
 
-const Users = new Scheme ({
+const Users = new Scheme( {
     username: {
         type: String,
         unique: true,
@@ -10,7 +10,7 @@ const Users = new Scheme ({
     password: {
         type: String,
         maxlength: 255
-    }, 
+    },
     email: {
         type: String, unique: true
     },
@@ -20,9 +20,9 @@ const Users = new Scheme ({
     avartar: {
         type: String
     },
-    available: {type: Boolean, default: false}
+    available: { type: Boolean, default: false }
 }, {
     timestamps: true
-})
+} )
 
-module.exports = mongoose.model('user', Users)
+module.exports = mongoose.model( 'user', Users )
