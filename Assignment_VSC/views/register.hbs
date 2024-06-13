@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <style>
+        .custom-file-input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+
+        .custom-file-input::before {
+            content: 'Chọn hình ảnh';
+            display: inline-block;
+            background: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            padding: 6px 12px;
+            outline: none;
+            white-space: nowrap;
+            -webkit-user-select: none;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            font-size: 10pt;
+            text-align: center;
+        }
+
+        .custom-file-input:hover::before {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .custom-file-input:active::before {
+            background-color: #005cbf;
+            border-color: #0056b3;
+        }
+
+        .custom-file-input:disabled::before {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+            color: #6c757d;
+        }
+
+        .container-register {
+            padding-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-register">
+        <h1>Đăng Ký</h1>
+        <form id="registerForm" class="form-">
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
+            </div>
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
+            </div>
+            <div class="form-group">
+                <label for="name">Họ và tên</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
+            </div>
+            <div class="form-group">
+                <label for="phonenumber">Số điện thoại</label>
+                <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Số điện thoại">
+            </div>
+            <div class="form-group">
+                <label for="image">Hình ảnh</label>
+                <input type="file" class="form-control custom-file-input" id="image" name="image" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Đăng Ký</button>
+        </form>
+        <div class="auth-links">
+            <p>Bạn đã có tài khoản?</p>
+            <a href="/login" class="btn btn-link">Đăng nhập ngay</a>
+        </div>
+    </div>
+
+    <script src="/javascript/register.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,5 @@
 body {
   font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom right, #737DFE, #FFCAC9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,6 +8,8 @@ body {
 }
 
 .container {
+  background: linear-gradient(to bottom right, #737DFE, #FFCAC9);
+
   display: flex;
   justify-content: center;
   align-items: center;
