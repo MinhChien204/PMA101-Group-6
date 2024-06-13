@@ -12,6 +12,7 @@ const apiRouter = require( "./api" );
 const { type } = require( "os" );
 const typeModel = require( "./models/type" );
 const addressModel = require( "./models/address" );
+const bcrypt = require( 'bcrypt' );
 
 app.use( express.json() );
 app.use( "/uploads", express.static( path.join( __dirname, "public/uploads" ) ) ); // Serve uploaded files
@@ -392,5 +393,40 @@ app.get( "/search", async ( req, res ) =>
 //     res.status(500).send("Đã xảy ra lỗi khi sắp xếp danh sách sản phẩm");
 //   }
 // });
+app.post( '/change-password', async ( req, res ) =>
+{
+  const { userId, oldPassword, newPassword } = req.body;
+
+  try
+  {
+    const user = await users.findById( userId );
+
+    if ( !user )
+    {
+      return res.status( 404 ).send( { error: "User not found" } );
+    }
+
+    // Kiểm tra mật khẩu cũ
+    const isMatch = await bcrypt.compare( oldPassword, user.password );
+    if ( !isMatch )
+    {
+      return res.status( 400 ).send( { error: "Old password is incorrect" } );
+    }
+
+    // Mã hóa mật khẩu mới
+    const salt = await bcrypt.genSalt( 10 );
+    const hashedPassword = await bcrypt.hash( newPassword, salt );
+
+    // Cập nhật mật khẩu
+    user.password = hashedPassword;
+    await user.save();
+
+    res.send( { message: "Password changed successfully" } );
+  } catch ( error )
+  {
+    console.error( error );
+    res.status( 500 ).send( { error: "An error occurred" } );
+  }
+} );
 
 module.exports = app;
