@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Quản lí sản phẩm</p>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Product List</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class=" mt-4">
+            <div class="row mb-3">
+                <div class="col">
+                    <h2>Danh Sách Sản Phẩm</h2>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <button class="btn btn-success">+ Tạo mới sản phẩm</button>
+                    <button class="btn btn-primary">Tải tệp file</button>
+                    <button class="btn btn-secondary">Sao chép</button>
+                    <button class="btn btn-info">Xuất Excel</button>
+                    <button class="btn btn-danger">Xuất PDF</button>
+                    <button class="btn btn-warning">Xóa tất cả</button>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                </div>
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Mô tả</th>
+                        <th>Ảnh</th>
+                        <th>Loại</th>
+                        <th>Size</th>
+                        <th>Màu</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Áo Chile loại mạnh mẽ</td>
+                        <td>2220000</td>
+                        <td>sang xịn mịn cho dân phòng</td>
+                        <td><img src="img1.jpg" alt="Ảnh sản phẩm" class="img-thumbnail" width="50"></td>
+                        <td>Áo Chile</td>
+                        <td>S</td>
+                        <td>white,black,green,red</td>
+                        <td>5</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Repeat the <tr> block for each product as shown in the image -->
+                </tbody>
+            </table>
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
 </html>

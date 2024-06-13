@@ -1,11 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Quản lí người dùng</p>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Danh Sách Người Dùng</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/public/stylesheets/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Danh Sách Người Dùng</a>
+        </nav>
+        <div class=" mt-4">
+            <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-success">+ Thêm người dùng</button>
+
+            </div>
+            <input class="form-control mb-3" type="text" placeholder="Tìm kiếm..">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Email</th>
+                        <th>Họ tên</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
+                        <th>Role</th>
+                        <th>Avatar</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>quangnd122@gmail.com</td>
+                        <td>nguyendinhquang</td>
+                        <td>H14</td>
+                        <td>0399877456</td>
+                        <td>User</td>
+                        <td><img src="avatar1.png" alt="Avatar" class="avatar"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>fpl@gmail.com</td>
+                        <td>Quang</td>
+                        <td>HP</td>
+                        <td>84399877467</td>
+                        <td>User</td>
+                        <td><img src="avatar2.png" alt="Avatar" class="avatar"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>quan@gmail.com</td>
+                        <td>Minh Quân</td>
+                        <td>Quan Hoa, Cau Giay, Ha Noi</td>
+                        <td>988985666</td>
+                        <td>User</td>
+                        <td><img src="avatar3.png" alt="Avatar" class="avatar"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>haha@gmail.com</td>
+                        <td>Hiếu gà</td>
+                        <td>Hà Nội</td>
+                        <td>1324659798</td>
+                        <td>User</td>
+                        <td><img src="avatar4.png" alt="Avatar" class="avatar"></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </body>
+
 </html>
