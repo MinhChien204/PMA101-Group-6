@@ -18,31 +18,15 @@
         android:theme="@style/Theme.Less3"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ChitietHoaDon"
-            android:exported="false" />
-        <activity
-            android:name=".QLHoaDon"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_ChiTietSP"
-            android:exported="false" />
-        <activity
-            android:name=".Activity_Home"
-            android:exported="false" />
-        <activity
-            android:name=".gioHang"
-            android:exported="false" />
-        <activity
-            android:name=".thanhToan"
-            android:exported="false" />
-        <activity
-            android:name=".TrangChu"
-            android:exported="true" />
-
 
         <activity
-            android:name=".DangNhapActivity"
+            android:name=".activity.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DangNhapActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DangKyActivity"
+            android:name=".activity.DangKyActivity"
             android:exported="true" />
     </application>
 

@@ -12,7 +12,6 @@ public class Clothes implements Serializable {
     private int price_cloth;
 
     private String brand;
-    private String chatlieu;
     private String mota;
 
     private boolean tinhtrang;
@@ -20,13 +19,12 @@ public class Clothes implements Serializable {
     public Clothes() {
     }
 
-    public Clothes(String _id, String image_cloth, String name_cloth, int price_cloth, String brand, String chatlieu, String mota, boolean tinhtrang) {
+    public Clothes(String _id, String image_cloth, String name_cloth, int price_cloth, String brand, String mota, boolean tinhtrang) {
         this._id = _id;
         this.image_cloth = image_cloth;
         this.name_cloth = name_cloth;
         this.price_cloth = price_cloth;
         this.brand = brand;
-        this.chatlieu = chatlieu;
         this.mota = mota;
         this.tinhtrang = tinhtrang;
     }
@@ -69,14 +67,6 @@ public class Clothes implements Serializable {
 
     public void setBrand(String brand) {
         this.brand = brand;
-    }
-
-    public String getChatlieu() {
-        return chatlieu;
-    }
-
-    public void setChatlieu(String chatlieu) {
-        this.chatlieu = chatlieu;
     }
 
     public String getMota() {

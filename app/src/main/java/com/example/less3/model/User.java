@@ -1,18 +1,20 @@
 package com.example.less3.model;
 
 public class User {
-    private String _id,username,password,email,name,avartar,available;
-    private String createdAt,updatedAt;
+    private String _id, username, password, email, name, phonenumber, address, avartar, available;
+    private String createdAt, updatedAt;
 
     public User() {
     }
 
-    public User(String _id, String username, String password, String email, String name, String avartar, String available, String createdAt, String updatedAt) {
+    public User(String _id, String username, String password, String email, String name, String phonenumber, String address, String avartar, String available, String createdAt, String updatedAt) {
         this._id = _id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
+        this.phonenumber = phonenumber;
+        this.address = address;
         this.avartar = avartar;
         this.available = available;
         this.createdAt = createdAt;
@@ -57,6 +59,22 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getAvartar() {

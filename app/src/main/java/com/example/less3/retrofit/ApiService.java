@@ -1,6 +1,8 @@
 package com.example.less3.retrofit;
 
+import com.example.less3.model.Address;
 import com.example.less3.model.Clothes;
+import com.example.less3.model.Type;
 import com.example.less3.model.User;
 
 import java.util.List;
@@ -23,41 +25,30 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     String DOMAIN = "http://10.0.2.2:3000/";
-    @GET("/")
-    Call<List<Clothes>> getClothes();
-    @Multipart
-    @POST("/add_cloth")
-    Call<Clothes> AddClothes(@PartMap Map<String, RequestBody> requestBodyMap,
-                               @Part MultipartBody.Part imageSinhVien);
-    @Multipart
-    @PUT("/update/{id}")
-    Call<Clothes> updateClothes(@PartMap Map<String, RequestBody> requestBodyMap,
-                                  @Path("id") String id,
-                                  @Part MultipartBody.Part imageSinhVien);
-    @DELETE("/delete/{id}")
-    Call<Void> deleteClothes(@Path("id") String id);
 
+    @GET("api/product")
+    Call<List<Clothes>> getClothes();
+    @GET("api/product/{id}")
+    Call<Clothes> getClothDetails(@Path("id") String id);
+    @GET("api/type")
+    Call<List<Type>> getType();
+    @GET("api/address")
+    Call<List<Address>> getAddress();
     @Multipart
-    @POST("/register-send-email")
+    @POST("api/register-send-email")
     Call<Response<User>> register(
             @Part("username") RequestBody username,
             @Part("password") RequestBody password,
             @Part("email") RequestBody email,
             @Part("name") RequestBody name,
+            @Part("phonenumber") RequestBody phonenumber,
+            @Part("address") RequestBody address,
             @Part MultipartBody.Part avartar
     );
-    @POST("/login")
+    @POST("api/login")
     Call<Response<User>> login (@Body User user);
-    @Multipart
-    @PUT("/update-no-image/{id}")
-    Call<Clothes> updateNoImage(@PartMap Map<String, RequestBody> requestBodyMap,
-                                @Path("id") String id
-    );
+
     @GET("/search")
     Call<List<Clothes>> searchCay(@Query("key") String query);
-    @GET("/giam-dan")
-    Call<List<Clothes>> getGiam();
 
-    @GET("/tang-dan")
-    Call<List<Clothes>> getTang();
 }

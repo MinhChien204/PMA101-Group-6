@@ -17,6 +17,12 @@ const Users = new Scheme( {
     name: {
         type: String
     },
+    phonenumber: {
+        type: String,
+    },
+    address: {
+        type: String
+    },
     avartar: {
         type: String
     },
