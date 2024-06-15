@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ giao hàng"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_add_new_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="138dp"
+            android:text="Thêm địa chỉ mới"
+            android:textColor="@color/colorPrimary"
+
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/radio_group_addresse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/radio_address_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Nguyen Van A\nQuan Hoa, Cầu Giấy, Hà Nội\n0988886666"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:id="@+id/radio_address_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Nguyen Van B\nQuan Hoa, Cầu Giấy, Hà Nội\n0988886666"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/tv_payment_method"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30dp"
+        android:text="Phương thức thanh toán"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cod"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/khung_editmau"
+            android:backgroundTint="#32CD32"
+            android:text="Thanh toán nhận hàng" />
+
+        <Button
+            android:id="@+id/btn_stripe"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/khung"
+            android:padding="5dp"
+            android:text="Stripe" />
+
+        <Button
+            android:id="@+id/btn_momo"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/khung"
+            android:padding="5dp"
+            android:text="MoMo" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_order_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Thông tin đặt hàng"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_product_quantity1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Sản phẩm:" />
+
+            <TextView
+                android:id="@+id/tv_product_quantity2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="240dp"
+                android:layout_marginTop="10dp"
+                android:text=" 3 sản phẩm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_product_price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Giá: " />
+
+            <TextView
+                android:id="@+id/tv_product_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="280dp"
+                android:layout_marginTop="10dp"
+                android:text=" 1.400.000đ" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_shipping_fee1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Phí vận chuyển: " />
+
+            <TextView
+                android:id="@+id/tv_shipping_fee2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="224dp"
+                android:text=" 15.000đ" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_total_price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Tổng: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_total_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text=" 1.415.000đ"
+                android:layout_marginLeft="265dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_checkout_now"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:background="@drawable/khung_edit"
+        android:layout_marginTop="16dp"
+        android:text="Thanh toán ngay"
+        android:textAllCaps="false" />
+
+</LinearLayout>
