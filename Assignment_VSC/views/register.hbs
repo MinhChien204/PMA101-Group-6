@@ -6,43 +6,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <style>
-        .custom-file-input::-webkit-file-upload-button {
-            visibility: hidden;
-        }
-
-        .custom-file-input::before {
-            content: 'Chọn hình ảnh';
-            display: inline-block;
-            background: #007bff;
-            border: 1px solid #007bff;
-            border-radius: 5px;
-            padding: 6px 12px;
-            outline: none;
-            white-space: nowrap;
-            -webkit-user-select: none;
-            cursor: pointer;
-            color: white;
-            font-weight: 700;
-            font-size: 10pt;
-            text-align: center;
-        }
-
-        .custom-file-input:hover::before {
-            background-color: #0069d9;
-            border-color: #0062cc;
-        }
-
-        .custom-file-input:active::before {
-            background-color: #005cbf;
-            border-color: #0056b3;
-        }
-
-        .custom-file-input:disabled::before {
-            background-color: #e9ecef;
-            border-color: #ced4da;
-            color: #6c757d;
-        }
-
         .container-register {
             padding-top: 50px;
         }
@@ -60,41 +23,56 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+        }
     </style>
 </head>
 
 <body>
     <div class="container-register">
         <h1>Đăng Ký</h1>
-        <form id="registerForm" class="form-">
+        <form id="registerForm" class="form-" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="username">Tên đăng nhập</label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
+                <span id="usernameError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
+                <span id="passwordError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="name">Họ và tên</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên">
+                <span id="nameError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                <span id="emailError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="address">Địa chỉ</label>
                 <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ">
+                <span id="addressError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="phonenumber">Số điện thoại</label>
-                <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Số điện thoại">
+                <input type="text" class="form-control" id="phonenumber" name="phonenumber"
+                    placeholder="Số điện thoại">
+                <span id="phonenumberError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="image">Hình ảnh</label>
-                <input type="file" class="form-control custom-file-input" id="image" name="image" accept="image/*">
+                <input type="file" class="form-control-file" id="image" name="image" accept="image/*"
+                    onchange="displayFileName()">
+                <span id="imageError" class="error-message"></span>
             </div>
+            <span id="filenameDisplay"></span>
             <button type="submit" class="btn btn-primary btn-block">Đăng Ký</button>
         </form>
         <div class="auth-links">
@@ -107,6 +85,101 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function displayFileName() {
+            const fileInput = document.getElementById('image');
+            const filenameDisplay = document.getElementById('filenameDisplay');
+
+            if (fileInput.files.length > 0) {
+                filenameDisplay.textContent = `Tên file: ${fileInput.files[0].name}`;
+            } else {
+                filenameDisplay.textContent = '';
+            }
+        }
+
+        function validateForm() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const phonenumber = document.getElementById('phonenumber').value.trim();
+            const image = document.getElementById('image').value.trim();
+
+            let isValid = true;
+
+            // Reset error messages
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('addressError').textContent = '';
+            document.getElementById('phonenumberError').textContent = '';
+            document.getElementById('imageError').textContent = '';
+
+            // Validate username
+            if (username === '') {
+                document.getElementById('usernameError').textContent = 'Vui lòng nhập tên đăng nhập';
+                isValid = false;
+            }
+
+            // Validate password
+            if (password === '') {
+                document.getElementById('passwordError').textContent = 'Vui lòng nhập mật khẩu';
+                isValid = false;
+            }
+
+            // Validate name
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Vui lòng nhập họ và tên';
+                isValid = false;
+            }
+
+            // Validate email
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Vui lòng nhập địa chỉ email';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Địa chỉ email không hợp lệ';
+                isValid = false;
+            }
+
+            // Validate address
+            if (address === '') {
+                document.getElementById('addressError').textContent = 'Vui lòng nhập địa chỉ';
+                isValid = false;
+            }
+
+            // Validate phonenumber
+            if (phonenumber === '') {
+                document.getElementById('phonenumberError').textContent = 'Vui lòng nhập số điện thoại';
+                isValid = false;
+            } else if (!isValidPhoneNumber(phonenumber)) {
+                document.getElementById('phonenumberError').textContent = 'Số điện thoại không hợp lệ';
+                isValid = false;
+            }
+
+            // Validate image
+            if (image === '') {
+                document.getElementById('imageError').textContent = 'Vui lòng chọn hình ảnh';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function isValidEmail(email) {
+            // Simple email validation regex
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function isValidPhoneNumber(phonenumber) {
+            // Simple phone number validation regex (only digits, optional leading +)
+            const phoneNumberRegex = /^[+]?\d+$/;
+            return phoneNumberRegex.test(phonenumber);
+        }
+    </script>
 </body>
 
 </html>

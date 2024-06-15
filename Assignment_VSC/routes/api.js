@@ -3,22 +3,14 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
+const upload = require("../config/Upload");
 
 const users = require('../models/user');
 const cloModel = require('../models/clothesModel');
 const typeModel = require('../models/type');
 const addressModel = require('../models/address');
-
 // Cấu hình multer để tải lên tệp
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
-const upload = multer({ storage: storage });
+
 
 // Các tuyến API
 
@@ -186,18 +178,20 @@ router.delete('/delete/:id', async (req, res) => {
 });
 
 // Đăng ký tài khoản
-router.post('/register-send-email', upload.single('avartar'), async (req, res) => {
+router.post("/register-send-email", upload.single("avartar"), async (req, res) => {
   try {
     const data = req.body;
     const { file } = req;
-    const avatar = `${req.protocol}://${req.get("host")}/uploads/${file.filename}`;
+    const avatar = `${req.protocol}://${req.get("host")}/uploads/${
+      file.filename
+    }`; 
     const newUser = users({
       username: data.username,
       password: data.password,
       email: data.email,
       name: data.name,
-      phonenumber: data.phonenumber,
-      address: data.address,
+      phonenumber:data.phonenumber,
+      address:data.address,
       avartar: avatar,
     });
     const result = await newUser.save();
@@ -216,19 +210,18 @@ router.post('/register-send-email', upload.single('avartar'), async (req, res) =
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
   }
 });
 
 // Đăng nhập
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await users.findOne({ username, password });
     if (user) {
       res.json({
         status: 200,
-        messenger: "Đăng nhập thành công",
+        messenger: "Đăng nhâp thành công",
         data: user,
       });
     } else {
@@ -240,7 +233,6 @@ router.post('/login', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).send("Internal Server Error");
   }
 });
 

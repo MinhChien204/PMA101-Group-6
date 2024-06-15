@@ -12,10 +12,10 @@ router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
-router.get('/login', function (req, res, next) {
+router.get('/login', function (_req, res, _next) {
   res.render('login', { title: 'Login' });
 });
-router.get('/home', function (req, res, next) {
+router.get('/home', function (_req, res, _next) {
   res.render('home', { title: 'home' });
 });
 router.get('/user-management', function (req, res, next) {
