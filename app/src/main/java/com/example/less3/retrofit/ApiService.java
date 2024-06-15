@@ -24,17 +24,18 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    String DOMAIN = "http://10.0.2.2:3000/api/";
-    @GET("/product")
+    String DOMAIN = "http://10.0.2.2:3000/";
+
+    @GET("api/product")
     Call<List<Clothes>> getClothes();
-    @GET("/product/{id}")
+    @GET("api/product/{id}")
     Call<Clothes> getClothDetails(@Path("id") String id);
-    @GET("/type")
+    @GET("api/type")
     Call<List<Type>> getType();
-    @GET("/address")
+    @GET("api/address")
     Call<List<Address>> getAddress();
     @Multipart
-    @POST("/register-send-email")
+    @POST("api/register-send-email")
     Call<Response<User>> register(
             @Part("username") RequestBody username,
             @Part("password") RequestBody password,
@@ -44,7 +45,7 @@ public interface ApiService {
             @Part("address") RequestBody address,
             @Part MultipartBody.Part avartar
     );
-    @POST("/login")
+    @POST("api/login")
     Call<Response<User>> login (@Body User user);
 
     @GET("/search")
