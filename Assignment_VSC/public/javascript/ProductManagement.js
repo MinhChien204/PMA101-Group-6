@@ -1,4 +1,6 @@
 const formProduct = document.getElementById( 'form-product' );
+const formlist = document.getElementById( 'formProduct' );
+const formadd = document.getElementById( 'form-fruit' );
 const image_cloth = document.getElementById( 'image_cloth' );
 const name_cloth = document.getElementById( 'name_cloth' );
 const price_cloth = document.getElementById( 'price_cloth' );
@@ -206,7 +208,7 @@ const updateFruit = async ( event ) =>
     }
 }
 
-formProduct.addEventListener( 'submit', event =>
+formadd.addEventListener( 'submit', event =>
 {
     if ( idFruit.value === '' )
     {
