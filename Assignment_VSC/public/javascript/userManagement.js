@@ -1,8 +1,10 @@
+let users = [];
+
 // Fetch users from the server
 async function fetchUsers() {
     try {
         const response = await fetch('/api/users');
-        const users = await response.json();
+        users = await response.json();
         renderUserTable(users);
     } catch (error) {
         console.error('Error fetching users:', error);
