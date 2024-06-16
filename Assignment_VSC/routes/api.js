@@ -1,30 +1,57 @@
-const express = require( 'express' );
+const express = require("express");
 const router = express.Router();
-const multer = require( 'multer' );
-const path = require( 'path' );
-const mongoose = require( 'mongoose' );
+const multer = require("multer");
+const path = require("path");
+const mongoose = require("mongoose");
+const upload = require("../config/Upload");
 
-const users = require( '../models/user' );
-const cloModel = require( '../models/clothesModel' );
-const typeModel = require( '../models/type' );
-const addressModel = require( '../models/address' );
+const users = require("../models/user");
+const cloModel = require("../models/clothesModel");
+const typeModel = require("../models/type");
+const addressModel = require("../models/address");
+const cartItemModel = require("../models/cartItem");
 
-// Cấu hình multer để tải lên tệp
-const storage = multer.diskStorage( {
-  destination: function ( req, file, cb )
-  {
-    cb( null, './uploads' );
-  },
-  filename: function ( req, file, cb )
-  {
-    cb( null, file.fieldname + '-' + Date.now() + path.extname( file.originalname ) );
+//API danh sách giỏ hàng
+router.get("/cart", async (req, res) => {
+  try {
+    let cart = await cartItemModel.find();
+    res.send(cart);
+  } catch (error) {
+    console.log("lỗi");
   }
-} );
-const upload = multer( { storage: storage } );
+});
 
-// Các tuyến API
+//APi thêm vào giỏ hàng
+router.post("/addtocart", async (req, res) => {
+  try {
+    const { productid_item, productsize_item, productquantity_item,productName_item,productImage_item,productPrice_item } = req.body;
+
+    if (!productid_item || !productsize_item || !productquantity_item || !productName_item || !productImage_item || !productPrice_item) {
+      return res.status(400).send({ error: "All fields are required" });
+    }
+
+    let newcartItem = new cartItemModel({
+      productid_item,
+      productsize_item,
+      productquantity_item,
+      productName_item,
+      productImage_item,
+      productPrice_item
+    });
+
+    await newcartItem.save();
+    res.status(201).send(newcartItem);
+  } catch (error) {
+    console.log("Error: ", error);
+    res
+      .status(500)
+      .send({ error: "An error occurred while adding cart" });
+  }
+});
+
 
 // Lấy danh sách thể loại
+
 router.get( '/type', async ( req, res ) =>
 {
   try
@@ -38,10 +65,8 @@ router.get( '/type', async ( req, res ) =>
 } );
 
 // Lấy danh sách địa chỉ
-router.get( '/address', async ( req, res ) =>
-{
-  try
-  {
+router.get("/address", async (req, res) => {
+  try {
     let address = await addressModel.find();
     res.send( address );
   } catch ( error )
@@ -51,6 +76,7 @@ router.get( '/address', async ( req, res ) =>
 } );
 
 // Thêm địa chỉ
+
 router.post( '/add_address', async ( req, res ) =>
 {
   try
@@ -65,19 +91,21 @@ router.post( '/add_address', async ( req, res ) =>
     let newAddress = new addressModel( {
       nameAddress,
       phoneAddress,
-      locationAddress
-    } );
+      locationAddress,
+    });
 
     await newAddress.save();
-    res.status( 201 ).send( newAddress );
-  } catch ( error )
-  {
-    console.log( "Error: ", error );
-    res.status( 500 ).send( { error: "An error occurred while adding the address" } );
+    res.status(201).send(newAddress);
+  } catch (error) {
+    console.log("Error: ", error);
+    res
+      .status(500)
+      .send({ error: "An error occurred while adding the address" });
   }
 } );
 
 // Xóa địa chỉ
+
 router.delete( '/del_address/:id', async ( req, res ) =>
 {
   try
@@ -90,11 +118,13 @@ router.delete( '/del_address/:id', async ( req, res ) =>
       return res.status( 404 ).send( { error: "Address not found" } );
     }
 
-    res.status( 200 ).send( { message: "Address deleted successfully" } );
-  } catch ( error )
-  {
-    console.log( "Error: ", error );
-    res.status( 500 ).send( { error: "An error occurred while deleting the address" } );
+    res.status(200).send({ message: "Address deleted successfully" });
+  } catch (error) {
+    console.log("Error: ", error);
+    res
+      .status(500)
+      .send({ error: "An error occurred while deleting the address" });
+
   }
 } );
 
@@ -112,36 +142,32 @@ router.get( '/product', async ( req, res ) =>
 } );
 
 // Lấy thông tin chi tiết của sản phẩm
-router.get( '/product/:id', async ( req, res ) =>
-{
-  try
-  {
+router.get("/product/:id", async (req, res) => {
+  try {
     const id = req.params.id;
-    if ( !mongoose.Types.ObjectId.isValid( id ) )
-    {
-      return res.status( 400 ).json( { message: 'Invalid ObjectId' } );
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid ObjectId" });
     }
-    const cloth = await cloModel.findById( id );
-    if ( !cloth )
-    {
-      return res.status( 404 ).json( { message: 'Product not found' } );
+    const cloth = await cloModel.findById(id);
+    if (!cloth) {
+      return res.status(404).json({ message: "Product not found" });
     }
-    res.send( cloth );
-  } catch ( error )
-  {
-    console.error( 'Error:', error );
-    res.status( 500 ).json( { message: 'Internal server error' } );
+    res.send(cloth);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+
   }
 } );
 
 // Thêm sản phẩm
-router.post( '/add_cloth', upload.single( 'image_cloth' ), async ( req, res ) =>
-{
-  try
-  {
+router.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
+  try {
     const data = req.body;
     const { file } = req;
-    const urlsImage = `${ req.protocol }://${ req.get( "host" ) }/uploads/${ file.filename }`;
+    const urlsImage = `${req.protocol}://${req.get("host")}/uploads/${
+      file.filename
+    }`;
 
     const newClothes = new cloModel( {
       brand: urlsImage,
@@ -170,7 +196,10 @@ router.put( '/update/:id', upload.single( 'image_cloth' ), async ( req, res ) =>
     const studentId = req.params.id;
     const { file } = req;
 
-    const imageUrl = `${ req.protocol }://${ req.get( "host" ) }/uploads/${ file.filename }`;
+    const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${
+      file.filename
+    }`;
+
 
     const updatedCloth = await cloModel.findByIdAndUpdate( studentId, {
       image_cloth: imageUrl,
@@ -204,6 +233,7 @@ router.put( '/update/:id', upload.single( 'image_cloth' ), async ( req, res ) =>
 } );
 
 // Xóa sản phẩm
+
 router.delete( '/delete/:id', async ( req, res ) =>
 {
   try
@@ -221,44 +251,45 @@ router.delete( '/delete/:id', async ( req, res ) =>
 } );
 
 // Đăng ký tài khoản
-router.post( '/register-send-email', upload.single( 'avartar' ), async ( req, res ) =>
-{
-  try
-  {
-    const data = req.body;
-    const { file } = req;
-    const avatar = `${ req.protocol }://${ req.get( "host" ) }/uploads/${ file.filename }`;
-    const newUser = users( {
-      username: data.username,
-      password: data.password,
-      email: data.email,
-      name: data.name,
-      phonenumber: data.phonenumber,
-      address: data.address,
-      avartar: avatar,
-    } );
-    const result = await newUser.save();
-    if ( result )
-    {
-      res.json( {
-        status: 200,
-        messenger: "Thêm thành công",
-        data: result,
-      } );
-    } else
-    {
-      res.json( {
-        status: 400,
-        messenger: "Lỗi, thêm không thành công",
-        data: [],
-      } );
+router.post(
+  "/register-send-email",
+  upload.single("avartar"),
+  async (req, res) => {
+    try {
+      const data = req.body;
+      const { file } = req;
+      const avatar = `${req.protocol}://${req.get("host")}/uploads/${
+        file.filename
+      }`;
+      const newUser = users({
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        name: data.name,
+        phonenumber: data.phonenumber,
+        address: data.address,
+        avartar: avatar,
+      });
+      const result = await newUser.save();
+      if (result) {
+        res.json({
+          status: 200,
+          messenger: "Thêm thành công",
+          data: result,
+        });
+      } else {
+        res.json({
+          status: 400,
+          messenger: "Lỗi, thêm không thành công",
+          data: [],
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch ( error )
-  {
-    console.log( error );
-    res.status( 500 ).send( "Internal Server Error" );
   }
-} );
+);
+
 
 // Đăng nhập
 router.post( '/login', async ( req, res ) =>
@@ -290,10 +321,9 @@ router.post( '/login', async ( req, res ) =>
 } );
 
 // Cập nhật sản phẩm không có ảnh
-router.put( '/update-no-image/:id', async ( req, res ) =>
-{
-  try
-  {
+router.put("/update-no-image/:id", async (req, res) => {
+  try {
+
     const svId = req.params.id;
     const data = req.body;
     const result = await cloModel.findByIdAndUpdate( svId, {
@@ -332,10 +362,8 @@ router.put( '/update-no-image/:id', async ( req, res ) =>
 } );
 
 // Tìm kiếm sản phẩm theo tên
-router.get( '/search', async ( req, res ) =>
-{
-  try
-  {
+router.get("/search", async (req, res) => {
+  try {
     const tuKhoa = req.query.key;
     const ketQuaTimKiem = await cloModel.find( {
       name_cloth: { $regex: new RegExp( tuKhoa, "i" ) },
