@@ -49,9 +49,93 @@ router.post("/addtocart", async (req, res) => {
   }
 });
 
+//APi danh sách người dùng
+router.get("/users", async (req, res) => {
+  try {
+    const userList = await users.find();
+    res.json(userList);
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//APi thêm người dùng
+router.post("/users", async (req, res) => {
+  try {
+    const { username, password, email, name, phonenumber, address, avartar } = req.body;
+
+    const newUser = new users({
+      username,
+      password,
+      email,
+      name,
+      phonenumber,
+      address,
+      avartar,
+    });
+
+    const result = await newUser.save();
+    res.status(201).json({
+      status: 200,
+      message: "User added successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while adding user" });
+  }
+});
+
+//APi sửa người dùng
+router.put("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, password, email, name, phonenumber, address, avartar } = req.body;
+
+    const updatedUser = await users.findByIdAndUpdate(id, {
+      username,
+      password,
+      email,
+      name,
+      phonenumber,
+      address,
+      avartar,
+    }, { new: true });
+
+    if (updatedUser) {
+      res.json({
+        status: 200,
+        message: "User updated successfully",
+        data: updatedUser,
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while updating user" });
+  }
+});
+
+//APi xóa người dùng
+router.delete("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedUser = await users.findByIdAndDelete(id);
+
+    if (deletedUser) {
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while deleting user" });
+  }
+});
 
 // Lấy danh sách thể loại
-
 router.get( '/type', async ( req, res ) =>
 {
   try
