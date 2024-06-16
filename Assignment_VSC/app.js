@@ -10,6 +10,20 @@ const { connect } = require('./config/db');
 
 const app = express();
 
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads'); // Destination directory for uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname); // Keep original file name
+  }
+});
+const upload = multer({ storage: storage });
+
+// Apply Multer middleware to handle file uploads
+app.use(upload.single('image_cloth'));
+
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

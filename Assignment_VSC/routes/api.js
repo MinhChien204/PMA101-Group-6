@@ -335,10 +335,7 @@ router.delete( '/delete/:id', async ( req, res ) =>
 } );
 
 // Đăng ký tài khoản
-router.post(
-  "/register-send-email",
-  upload.single("avartar"),
-  async (req, res) => {
+router.post("/register-send-email",upload.single("avartar"),async (req, res) => {
     try {
       const data = req.body;
       const { file } = req;
