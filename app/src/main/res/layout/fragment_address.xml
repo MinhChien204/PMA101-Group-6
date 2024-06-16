@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".fragment.AddressFragment">
 
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
@@ -24,18 +24,18 @@
             android:text="Địa Chỉ Của Tôi"
             android:layout_gravity="center"/>
 
-    </Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_addAddress"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="#fff"
         android:layout_margin="20dp"
         android:background="@drawable/button_background"
-        android:text="Thêm Địa Chỉ Mới"/>
+        android:text="Thêm Địa Chỉ Mới"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_newAddress"

@@ -9,13 +9,13 @@ public class Address {
     public Address() {
     }
 
-    public Address(String _id, String nameAddress, String phoneAddress, String locationAddress) {
-        this._id = _id;
+    public Address(String nameAddress, String phoneAddress, String locationAddress) {
         this.nameAddress = nameAddress;
         this.phoneAddress = phoneAddress;
         this.locationAddress = locationAddress;
     }
 
+    // Getters and setters
     public String get_id() {
         return _id;
     }

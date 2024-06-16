@@ -4,9 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp"
-    android:background="#FFFFFF">
+    android:layout_margin="5dp"
+    android:background="@drawable/khung_edit">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="80dp"
         android:src="@drawable/address_home" />
@@ -42,10 +44,19 @@
         <TextView
             android:id="@+id/tv_address"
             android:layout_width="wrap_content"
-            android:layout_margin="2dp"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:text="Phường Quan Hoa, Cầu Giấy, Hà Nội"
             android:textColor="#9E9E9E"
             android:textSize="16sp" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_deleteAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="Delete"
+        android:padding="8dp" />
 </LinearLayout>

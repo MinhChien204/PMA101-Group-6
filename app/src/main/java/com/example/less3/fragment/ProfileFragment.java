@@ -19,7 +19,7 @@ import com.example.less3.activity.DangNhapActivity;
 
 public class ProfileFragment extends Fragment {
 
-    LinearLayout linearorder, linearaddress, linearpassword;
+    LinearLayout linearorder, linearaddress, linearpassword,linearProfile;
     Button btnlogout;
 
     @Override
@@ -27,10 +27,18 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        linearProfile = view.findViewById(R.id.profile_section);
         linearorder = view.findViewById(R.id.profile_myorder);
         linearaddress = view.findViewById(R.id.profile_address);
         linearpassword = view.findViewById(R.id.profile_changePassword);
         btnlogout = view.findViewById(R.id.btn_logout);
+
+        linearProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new MyProfileFragment());
+            }
+        });
 
         linearorder.setOnClickListener(new View.OnClickListener() {
             @Override

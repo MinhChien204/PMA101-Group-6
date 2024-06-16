@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.example.less3.R;
@@ -20,6 +22,7 @@ import com.example.less3.activity.MainActivity;
 import com.example.less3.model.Clothes;
 import com.example.less3.retrofit.ApiService;
 import com.example.less3.retrofit.Config;
+import com.example.less3.viewmodel.CartViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +39,11 @@ public class DetailProductFragment extends Fragment {
     ImageView imgback;
     Clothes cloth;
 
+    Button btnaddtocart;
+
+    private CartViewModel cartViewModel;
+
+
     // Variables for quantity and size selection
     int quantity = 1;
     String selectedSize = "";
@@ -47,6 +55,7 @@ public class DetailProductFragment extends Fragment {
             cloth = (Clothes) getArguments().getSerializable("Chitietsanpham");
             Log.d("spct", "sanphamchitiet" + cloth);
         }
+        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
     }
 
     @Override
@@ -64,6 +73,7 @@ public class DetailProductFragment extends Fragment {
         tvmota = view.findViewById(R.id.motaDetailProduct);
         imgAvatar = view.findViewById(R.id.imgDetailProduct);
         tvQuantity = view.findViewById(R.id.tvQuantity);
+        btnaddtocart = view.findViewById(R.id.btn_addtocart);
         AppCompatButton btnDecrease = view.findViewById(R.id.btnDecrease);
         AppCompatButton btnIncrease = view.findViewById(R.id.btnIncrease);
 
@@ -79,6 +89,13 @@ public class DetailProductFragment extends Fragment {
         }
 
         getProductDetails(productId);
+
+        btnaddtocart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         imgback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,5 +193,12 @@ public class DetailProductFragment extends Fragment {
         if (getActivity() instanceof MainActivity) {
             ((MainActivity) getActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
         }
+    }
+    private void navigateToCart() {
+        CartFragment fragmentCart = new CartFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.framelayout, fragmentCart)
+                .addToBackStack(null)
+                .commit();
     }
 }

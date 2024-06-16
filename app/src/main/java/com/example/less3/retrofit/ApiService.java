@@ -34,6 +34,10 @@ public interface ApiService {
     Call<List<Type>> getType();
     @GET("api/address")
     Call<List<Address>> getAddress();
+    @POST("/api/add_address")
+    Call<Void> addAddress(@Body Address address);
+    @DELETE("del_address/{id}")
+    Call<Void> deleteAddress(@Path("id") String addressId);
     @Multipart
     @POST("api/register-send-email")
     Call<Response<User>> register(
@@ -50,5 +54,7 @@ public interface ApiService {
 
     @GET("/search")
     Call<List<Clothes>> searchCay(@Query("key") String query);
+
+
 
 }

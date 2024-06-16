@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.less3.R;
+import com.example.less3.adapter.CartAdapter;
 
 public class CartFragment extends Fragment {
 
@@ -22,6 +25,7 @@ public class CartFragment extends Fragment {
     private TextView itemCount;
     private TextView totalPrice;
     private Button paymentButton;
+    RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -33,6 +37,7 @@ public class CartFragment extends Fragment {
         itemCount = view.findViewById(R.id.item_count);
         totalPrice = view.findViewById(R.id.total_price);
         paymentButton = view.findViewById(R.id.payment_button);
+        recyclerView = view.findViewById(R.id.rcv_listcart);
 
         // Kiểm tra xem giỏ hàng có rỗng hay không
         if (cartIsEmpty()) {
@@ -48,6 +53,10 @@ public class CartFragment extends Fragment {
             itemCount.setText(String.valueOf(getItemCount()));
             totalPrice.setText(getTotalPrice() + "đ");
         }
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        final CartAdapter cartAdapter = new CartAdapter();
+        recyclerView.setAdapter(cartAdapter);
 
         return view;
     }

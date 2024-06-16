@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btnbackAddress"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm địa chỉ mới"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/edtNameAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên người nhận"
+            android:background="@drawable/khung_edit"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/edtPhoneAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            android:background="@drawable/khung_edit"
+            android:padding="16dp"
+            android:layout_marginTop="10dp"
+            android:inputType="phone"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/edtaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Địa chỉ"
+            android:background="@drawable/khung_edit"
+            android:padding="16dp"
+            android:layout_marginBottom="24dp"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnthemAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm địa chỉ mới"
+        android:background="@drawable/button_background"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/white"
+        android:padding="16dp"/>
+
+</LinearLayout>
