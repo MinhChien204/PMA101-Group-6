@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div class=" mt-4">
+        <div class="container mt-4">
             <div class="row mb-3">
                 <div class="col">
                     <h2>Danh Sách Sản Phẩm</h2>
@@ -18,7 +18,9 @@
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <a href="/add-product"> <button class="btn btn-success">+ Tạo mới sản phẩm</button></a>
+                    <a href="/add-product">
+                        <button class="btn btn-success">+ Tạo mới sản phẩm</button>
+                    </a>
                     <button class="btn btn-primary">Tải tệp file</button>
                     <button class="btn btn-secondary">Sao chép</button>
                     <button class="btn btn-info">Xuất Excel</button>
@@ -39,33 +41,23 @@
                         <th>Mô tả</th>
                         <th>Ảnh</th>
                         <th>Loại</th>
-
                         <th>Stock</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="formProduct">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-
-                        <td>
-                            <button class="btn btn-warning btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    </tr>
-
+                <tbody id="list-product">
+                    <!-- Products will be displayed here -->
                 </tbody>
             </table>
-
         </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+        <!-- Script tags for JS dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <!-- Your JavaScript file -->
+        <script src="/path/to/your/script.js"></script>
     </body>
 
 </html>
