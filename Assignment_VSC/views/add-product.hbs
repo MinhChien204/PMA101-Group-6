@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style>
+            /* Optional: Add your custom styles here */
+            .form-container {
+                margin-top: 50px;
+            }
+
+            .table-container {
+                margin-top: 50px;
+            }
+
+            .fruit-image img {
+                width: 200px;
+                /* Thay đổi kích thước theo nhu cầu */
+                height: auto;
+                /* Giữ tỷ lệ khung hình */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <h1>Add new product</h1>
+
+
+            <div class="form-container">
+                <form id="form-fruit" method="POST">
+                    <input type="hidden" id="idFruit">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="image_cloth" name="image_cloth"
+                            placeholder="Enter name_cloth">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Name:</label>
+                        <input type="number" class="form-control" id="name_cloth" name="name_cloth"
+                            placeholder="Enter name_cloth">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">price:</label>
+                        <input type="number" class="form-control" id="price_cloth" name="price_cloth"
+                            placeholder="Enter price_cloth">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="image">image:</label>
+                        <input type="file" id="brand" name="brand" placeholder="Enter brand" multiple>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">status:</label>
+                        <input type="text" class="form-control" id="mota" name="mota" placeholder="Enter mota">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">description:</label>
+                        <input type="text" class="form-control" id="tinhtrang" name="tinhtrang"
+                            placeholder="Enter tinhtrang">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+        </div>
+        <script src="/javascript/ProductManagement.js"></script>
+    </body>
+
+</html>
