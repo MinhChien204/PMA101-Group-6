@@ -60,6 +60,26 @@ router.get("/users", async (req, res) => {
   }
 });
 
+// API lấy thông tin chi tiết người dùng
+router.get("/users/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await users.findById(id);
+    if (user) {
+      res.status(200).json({
+        status: 200,
+        message: "User retrieved successfully",
+        data: user,
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while retrieving user" });
+  }
+});
+
 //APi thêm người dùng
 router.post("/users", async (req, res) => {
   try {
