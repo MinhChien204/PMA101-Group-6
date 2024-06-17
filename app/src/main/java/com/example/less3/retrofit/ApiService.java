@@ -36,8 +36,23 @@ public interface ApiService {
     Call<List<Address>> getAddress();
     @POST("/api/add_address")
     Call<Void> addAddress(@Body Address address);
-    @DELETE("del_address/{id}")
+    @DELETE("api/del_address/{id}")
     Call<Void> deleteAddress(@Path("id") String addressId);
+    @GET("api/users")
+    Call<List<User>> getUsers();
+    @GET("api/users/{id}")
+    Call<User> getUserDetails(@Path("id") String userId);
+
+    @POST("api/users")
+    Call<User> createUser(@Body User user);
+
+    @PUT("api/users/{id}")
+    Call<User> updateUser(@Path("id") String userId, @Body User user);
+
+    @DELETE("api/users/{id}")
+    Call<Void> deleteUser(@Path("id") String userId);
+
+
     @Multipart
     @POST("api/register-send-email")
     Call<Response<User>> register(
