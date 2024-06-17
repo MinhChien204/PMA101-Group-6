@@ -185,30 +185,35 @@ public class DetailProductFragment extends Fragment {
         });
     }
 
-    private void addToCart(){
+    // DetailProductFragment.java
+    private void addToCart() {
         Cart cartItem = new Cart();
-        cartItem.setProductid_item(cloth.get_id());  // Sử dụng ID sản phẩm phù hợp
+        cartItem.setProductid_item(cloth.get_id());
         cartItem.setProductsize_item(selectedSize);
         cartItem.setProductquantity_item(quantity);
+        cartItem.setProductimage_item(cloth.getImage_cloth());
+        cartItem.setProductname_item(cloth.getName_cloth());
+        cartItem.setProductprice_item(cloth.getPrice_cloth());
 
         Call<Void> call = apiService.addToCart(cartItem);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(requireContext(), "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-                    navigateToCart();  // Chuyển đến fragment giỏ hàng sau khi thêm sản phẩm
+                    Toast.makeText(requireContext(), "Product added to cart", Toast.LENGTH_SHORT).show();
+                    navigateToCart();  // Navigate to CartFragment after adding the product
                 } else {
-                    Toast.makeText(requireContext(), "Thêm sản phẩm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Failed to add product to cart", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
-                Toast.makeText(requireContext(), "Lỗi: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     @Override
     public void onDestroyView() {
