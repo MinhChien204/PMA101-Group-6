@@ -493,7 +493,7 @@ router.get("/search", async (req, res) => {
   try {
     const tuKhoa = req.query.key;
     const ketQuaTimKiem = await cloModel.find({
-      name_cloth: { $regex: new RegExp(tuKhoa, "i") },
+      brand: { $regex: new RegExp(tuKhoa, "i") }
     });
 
     if (ketQuaTimKiem.length > 0) {
