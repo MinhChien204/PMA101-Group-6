@@ -4,6 +4,7 @@ const multer = require("multer");
 const path = require("path");
 const mongoose = require("mongoose");
 const upload = require("../config/Upload");
+const bcrypt = require('bcrypt');
 
 const users = require("../models/user");
 const cloModel = require("../models/clothesModel");
@@ -420,6 +421,7 @@ router.post( '/login', async ( req, res ) =>
     res.status( 500 ).send( "Internal Server Error" );
   }
 } );
+
 
 // Cập nhật sản phẩm không có ảnh
 router.put("/update-no-image/:id", async (req, res) => {
