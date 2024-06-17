@@ -58,7 +58,7 @@ public class ClothesAdapter extends RecyclerView.Adapter<ClothesAdapter.ViewHold
         Clothes sv = list.get(position);
 
         holder.tvten.setText(sv.getName_cloth());
-        holder.tvgia.setText(String.valueOf(sv.getPrice_cloth()));
+        holder.tvgia.setText(String.valueOf(sv.getPrice_cloth()) +"VNĐ");
         holder.tvbrand.setText(sv.getBrand());
         Glide.with(context)
                 .load(sv.getImage_cloth())

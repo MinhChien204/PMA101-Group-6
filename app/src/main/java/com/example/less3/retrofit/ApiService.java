@@ -74,7 +74,7 @@ public interface ApiService {
     @POST("api/login")
     Call<Response<User>> login (@Body User user);
 
-    @GET("/search")
+    @GET("api/search")
     Call<List<Clothes>> searchCay(@Query("key") String query);
 
     @GET("api/khoac")
