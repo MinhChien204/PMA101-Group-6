@@ -23,6 +23,6 @@ const AopoloSchema = mongoose.Schema( {
 } )
 
 
-const AopolocModel = mongoose.model( 'aopolo', AopoloSchema );
+const AopolocModel = mongoose.model( 'aopolos', AopoloSchema );
 
 module.exports = AopolocModel;

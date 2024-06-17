@@ -23,6 +23,6 @@ const AosomiSchema = mongoose.Schema( {
 } )
 
 
-const AosomicModel = mongoose.model( 'aosomi', AosomiSchema );
+const AosomiModel = mongoose.model( 'aosomis', AosomiSchema );
 
-module.exports = AosomicModel;
+module.exports = AosomiModel;

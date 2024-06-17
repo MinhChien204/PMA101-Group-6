@@ -22,6 +22,6 @@ const AokhoacSchema = mongoose.Schema( {
 } )
 
 
-const AokhoacModel = mongoose.model( 'aokhoac', AokhoacSchema );
+const AokhoacModel = mongoose.model( 'aokhoacs', AokhoacSchema );
 
 module.exports = AokhoacModel;

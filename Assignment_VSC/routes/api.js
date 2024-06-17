@@ -11,7 +11,48 @@ const cloModel = require("../models/clothesModel");
 const typeModel = require("../models/type");
 const addressModel = require("../models/address");
 const cartItemModel = require("../models/cartItem");
+const somiModel = require("../models/aoSomi")
+const poloModel = require("../models/aopolo")
+const hoodieModel = require("../models/aohoodies")
+const khoacModel = require("../models/aokhoac")
 
+//APi hiển thi danh sách áo sơ mi
+router.get("/somi", async (req, res) => {
+  try {
+    let somi = await somiModel.find();
+    res.send(somi);
+  } catch (error) {
+    console.log("lỗi");
+  }
+});
+//APi hiển thi danh sách áo polo
+router.get("/polo", async (req, res) => {
+  try {
+    let polo = await poloModel.find();
+    res.send(polo);
+  } catch (error) {
+    console.log("lỗi");
+  }
+});
+//APi hiển thi danh sách áo hoodie
+router.get("/hoodie", async (req, res) => {
+  try {
+    let hoodie = await hoodieModel.find();
+    res.send(hoodie);
+  } catch (error) {
+    console.log("lỗi");
+  }
+});
+
+//APi hiển thi danh sách áo khoác
+router.get("/khoac", async (req, res) => {
+  try {
+    let khoac = await khoacModel.find();
+    res.send(khoac);
+  } catch (error) {
+    console.log("lỗi");
+  }
+});
 //API danh sách giỏ hàng
 router.get("/cart", async (req, res) => {
   try {
