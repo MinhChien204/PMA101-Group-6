@@ -1,6 +1,10 @@
 package com.example.less3.retrofit;
 
 import com.example.less3.model.Address;
+import com.example.less3.model.Aohoodie;
+import com.example.less3.model.Aokhoac;
+import com.example.less3.model.Aopolo;
+import com.example.less3.model.Aosomi;
 import com.example.less3.model.Cart;
 import com.example.less3.model.Clothes;
 import com.example.less3.model.Type;
@@ -72,6 +76,15 @@ public interface ApiService {
 
     @GET("/search")
     Call<List<Clothes>> searchCay(@Query("key") String query);
+
+    @GET("api/khoac")
+    Call<List<Aokhoac>> getAokhoac();
+    @GET("api/hoodie")
+    Call<List<Aohoodie>> getAohoodie();
+    @GET("api/polo")
+    Call<List<Aopolo>> getAopolo();
+    @GET("api/somi")
+    Call<List<Aosomi>> getAosomi();
 
 
 
