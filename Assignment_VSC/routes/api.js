@@ -209,7 +209,6 @@ router.get( '/type', async ( req, res ) =>
     console.log( "lỗi" );
   }
 } );
-
 // Lấy danh sách địa chỉ
 router.get("/address", async (req, res) => {
   try {
@@ -220,9 +219,7 @@ router.get("/address", async (req, res) => {
     console.log( "lỗi" );
   }
 } );
-
 // Thêm địa chỉ
-
 router.post( '/add_address', async ( req, res ) =>
 {
   try
@@ -249,9 +246,7 @@ router.post( '/add_address', async ( req, res ) =>
       .send({ error: "An error occurred while adding the address" });
   }
 } );
-
 // Xóa địa chỉ
-
 router.delete( '/del_address/:id', async ( req, res ) =>
 {
   try
@@ -273,7 +268,6 @@ router.delete( '/del_address/:id', async ( req, res ) =>
 
   }
 } );
-
 // Lấy danh sách sản phẩm
 router.get( '/product', async ( req, res ) =>
 {
@@ -286,7 +280,6 @@ router.get( '/product', async ( req, res ) =>
     console.log( "lỗi" );
   }
 } );
-
 // Lấy thông tin chi tiết của sản phẩm
 router.get("/product/:id", async (req, res) => {
   try {
@@ -305,7 +298,6 @@ router.get("/product/:id", async (req, res) => {
 
   }
 } );
-
 // Thêm sản phẩm
 router.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
   try {
@@ -332,7 +324,6 @@ router.post("/add_cloth", upload.single("image_cloth"), async (req, res) => {
     res.status( 500 ).send( "Internal Server Error" );
   }
 } );
-
 // Cập nhật sản phẩm
 router.put( '/update/:id', upload.single( 'image_cloth' ), async ( req, res ) =>
 {
@@ -377,9 +368,7 @@ router.put( '/update/:id', upload.single( 'image_cloth' ), async ( req, res ) =>
     res.status( 500 ).send( "Internal Server Error" );
   }
 } );
-
 // Xóa sản phẩm
-
 router.delete( '/delete/:id', async ( req, res ) =>
 {
   try
@@ -395,7 +384,6 @@ router.delete( '/delete/:id', async ( req, res ) =>
     res.status( 500 ).send( "Internal Server Error" );
   }
 } );
-
 // Đăng ký tài khoản
 router.post("/register-send-email",upload.single("avartar"),async (req, res) => {
     try {
@@ -432,8 +420,6 @@ router.post("/register-send-email",upload.single("avartar"),async (req, res) => 
     }
   }
 );
-
-
 // Đăng nhập
 router.post( '/login', async ( req, res ) =>
 {
@@ -462,8 +448,6 @@ router.post( '/login', async ( req, res ) =>
     res.status( 500 ).send( "Internal Server Error" );
   }
 } );
-
-
 // Cập nhật sản phẩm không có ảnh
 router.put("/update-no-image/:id", async (req, res) => {
   try {
@@ -504,26 +488,24 @@ router.put("/update-no-image/:id", async (req, res) => {
     } );
   }
 } );
-
 // Tìm kiếm sản phẩm theo tên
 router.get("/search", async (req, res) => {
   try {
     const tuKhoa = req.query.key;
-    const ketQuaTimKiem = await cloModel.find( {
-      name_cloth: { $regex: new RegExp( tuKhoa, "i" ) },
-    } );
+    const ketQuaTimKiem = await cloModel.find({
+      name_cloth: { $regex: new RegExp(tuKhoa, "i") },
+    });
 
-    if ( ketQuaTimKiem.length > 0 )
-    {
-      res.json( ketQuaTimKiem );
-    } else
-    {
-      res.json( [] );
+    if (ketQuaTimKiem.length > 0) {
+      res.json(ketQuaTimKiem);
+    } else {
+      res.json([]);
     }
-  } catch ( error )
-  {
-    res.status( 500 ).send( "Lỗi máy chủ nội bộ" );
+  } catch (error) {
+    console.error("Lỗi tìm kiếm:", error);
+    res.status(500).send("Lỗi máy chủ nội bộ");
   }
-} );
+});
+
 
 module.exports = router;
