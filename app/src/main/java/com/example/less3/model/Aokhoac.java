@@ -1,2 +1,4 @@
-package com.example.less3.model;public class Aokhoac {
+package com.example.less3.model;
+
+public class Aokhoac {
 }

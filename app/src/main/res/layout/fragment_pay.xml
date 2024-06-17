@@ -38,21 +38,12 @@
 
         android:layout_marginTop="16dp">
 
-        <RadioButton
-            android:id="@+id/radio_address_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Nguyen Van A\nQuan Hoa, Cầu Giấy, Hà Nội\n0988886666"
-            android:textSize="14sp" />
+     <androidx.recyclerview.widget.RecyclerView
+         android:layout_width="wrap_content"
+         android:id="@+id/rcvgh"
+         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/radio_address_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Nguyen Van B\nQuan Hoa, Cầu Giấy, Hà Nội\n0988886666"
-            android:textSize="14sp" />
+     </androidx.recyclerview.widget.RecyclerView>
     </RadioGroup>
 
 
