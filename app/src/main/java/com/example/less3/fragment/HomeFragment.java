@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,11 +47,11 @@ public class HomeFragment extends Fragment {
     List<Clothes> list;
     ClothesAdapter clothesAdapter;
     ApiService apiService;
-    EditText search;
     ClothesAdapter adapter;
     ImageView anh;
     Uri uri;
     ImageSlider imageSlider;
+    EditText edtSearch;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -59,8 +61,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerView = view.findViewById(R.id.rcv_TrangChu);
-        search = view.findViewById(R.id.edt_search);
         anh = view.findViewById(R.id.imgAvata); // Assuming you have an ImageView in your layout
+        edtSearch =view.findViewById(R.id.edt_search);
         imageSlider = view.findViewById(R.id.imgSlider);
         ArrayList<SlideModel> slideModels = new ArrayList<>();
 
@@ -79,6 +81,24 @@ public class HomeFragment extends Fragment {
         apiService = retrofit.create(ApiService.class);
 
         loadData();
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String keyword = editable.toString().trim();
+                searchProduct(keyword);
+            }
+        });
 
         return view;
     }
@@ -106,9 +126,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-
-
-
 //    @Override
 //    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -118,25 +135,32 @@ public class HomeFragment extends Fragment {
 //        }
 //    }
 
-//    private void searchDistributor(String keyword) {
-//        Call<List<Clothes>> call = apiService.searchCay(keyword);
-//        call.enqueue(new Callback<List<Clothes>>() {
-//            @Override
-//            public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
-//                if (response.isSuccessful()) {
-//                    list = response.body();
-//
-//                    adapter = new ClothesAdapter(list, getContext(), HomeFragment.this);
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                    recyclerView.setAdapter(adapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Clothes>> call, Throwable t) {
-//                Log.e("Search", "Search failed: " + t.toString());
-//                Toast.makeText(getContext(), "Đã xảy ra lỗi khi tìm kiếm", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+    private void searchProduct(String keyword) {
+        Call<List<Clothes>> call = apiService.searchCay(keyword);
+        call.enqueue(new Callback<List<Clothes>>() {
+            @Override
+            public void onResponse(Call<List<Clothes>> call, Response<List<Clothes>> response) {
+                if (response.isSuccessful()) {
+                    list.clear(); // Xóa danh sách hiện tại để cập nhật lại danh sách mới từ kết quả tìm kiếm
+                    list.addAll(response.body()); // Thêm các phần tử mới từ kết quả tìm kiếm
+                    clothesAdapter.notifyDataSetChanged(); // Thông báo cho adapter biết rằng dữ liệu đã thay đổi
+
+                    // Nếu không có sản phẩm nào được tìm thấy
+                    if (list.isEmpty()) {
+                        Toast.makeText(getContext(), "Không tìm thấy sản phẩm nào", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Đã xảy ra lỗi khi tìm kiếm", Toast.LENGTH_SHORT).show();
+                    Log.e("Search", "Search failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Clothes>> call, Throwable t) {
+                Log.e("Search", "Search failed: " + t.toString());
+                Toast.makeText(getContext(), "Đã xảy ra lỗi khi tìm kiếm", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
