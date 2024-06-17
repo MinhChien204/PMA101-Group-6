@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DangNhapActivity extends AppCompatActivity {
     ApiService apiService;
-
+    private User loggedInUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +69,13 @@ public class DangNhapActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Response<User>> call, Response<Response<User>> response) {
                         if (response.isSuccessful()) {
+//                            User loggedInUser = response.body().getData();
+                            // Store the user ID in SharedPreferences
+//                            getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+//                                    .edit()
+//                                    .putString("userId", loggedInUser.get_id())
+//                                    .apply();
+
                             Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(DangNhapActivity.this, MainActivity.class));
                         } else {

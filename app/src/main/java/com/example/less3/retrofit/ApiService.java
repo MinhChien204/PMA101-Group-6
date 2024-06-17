@@ -1,6 +1,7 @@
 package com.example.less3.retrofit;
 
 import com.example.less3.model.Address;
+import com.example.less3.model.Cart;
 import com.example.less3.model.Clothes;
 import com.example.less3.model.Type;
 import com.example.less3.model.User;
@@ -25,34 +26,36 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     String DOMAIN = "http://10.0.2.2:3000/";
-
+    //API sản phẩm
     @GET("api/product")
     Call<List<Clothes>> getClothes();
     @GET("api/product/{id}")
     Call<Clothes> getClothDetails(@Path("id") String id);
+    //APi địa chỉ
     @GET("api/type")
     Call<List<Type>> getType();
     @GET("api/address")
     Call<List<Address>> getAddress();
-    @POST("/api/add_address")
+    @POST("api/add_address")
     Call<Void> addAddress(@Body Address address);
     @DELETE("api/del_address/{id}")
     Call<Void> deleteAddress(@Path("id") String addressId);
+    //APi nguoi dung
     @GET("api/users")
     Call<List<User>> getUsers();
     @GET("api/users/{id}")
     Call<User> getUserDetails(@Path("id") String userId);
-
     @POST("api/users")
     Call<User> createUser(@Body User user);
-
     @PUT("api/users/{id}")
     Call<User> updateUser(@Path("id") String userId, @Body User user);
-
     @DELETE("api/users/{id}")
     Call<Void> deleteUser(@Path("id") String userId);
-
-
+    //APi giỏ hàng
+    @GET("api/cart")
+    Call<List<Cart>> getCart();
+    @POST("api/cart")
+    Call<Void> addToCart(@Body Cart cartItem);
     @Multipart
     @POST("api/register-send-email")
     Call<Response<User>> register(

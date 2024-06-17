@@ -19,10 +19,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.example.less3.R;
 import com.example.less3.activity.MainActivity;
+import com.example.less3.model.Cart;
 import com.example.less3.model.Clothes;
 import com.example.less3.retrofit.ApiService;
 import com.example.less3.retrofit.Config;
-import com.example.less3.viewmodel.CartViewModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +41,6 @@ public class DetailProductFragment extends Fragment {
 
     Button btnaddtocart;
 
-    private CartViewModel cartViewModel;
 
 
     // Variables for quantity and size selection
@@ -55,7 +54,6 @@ public class DetailProductFragment extends Fragment {
             cloth = (Clothes) getArguments().getSerializable("Chitietsanpham");
             Log.d("spct", "sanphamchitiet" + cloth);
         }
-        cartViewModel = new ViewModelProvider(requireActivity()).get(CartViewModel.class);
     }
 
     @Override
@@ -93,7 +91,7 @@ public class DetailProductFragment extends Fragment {
         btnaddtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                addToCart();
             }
         });
 
@@ -183,6 +181,31 @@ public class DetailProductFragment extends Fragment {
             @Override
             public void onFailure(Call<Clothes> call, Throwable throwable) {
                 Toast.makeText(requireContext(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void addToCart(){
+        Cart cartItem = new Cart();
+        cartItem.setProductid_item(cloth.get_id());  // Sử dụng ID sản phẩm phù hợp
+        cartItem.setProductsize_item(selectedSize);
+        cartItem.setProductquantity_item(quantity);
+
+        Call<Void> call = apiService.addToCart(cartItem);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(requireContext(), "Đã thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+                    navigateToCart();  // Chuyển đến fragment giỏ hàng sau khi thêm sản phẩm
+                } else {
+                    Toast.makeText(requireContext(), "Thêm sản phẩm vào giỏ hàng thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable throwable) {
+                Toast.makeText(requireContext(), "Lỗi: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

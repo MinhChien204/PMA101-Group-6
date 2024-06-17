@@ -36,7 +36,6 @@
                 android:id="@+id/iv_profile_image"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/ic_launcher_foreground"
                 android:scaleType="centerCrop"
                 android:background="@drawable/circle_background"/>
 
@@ -51,7 +50,6 @@
                     android:id="@+id/tv_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nguyễn Văn A"
                     android:textSize="20sp"
                     android:textStyle="bold"/>
 
@@ -59,7 +57,6 @@
                     android:id="@+id/tv_profile_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="robertfox@mail.com"
                     android:textSize="14sp"
                     android:textColor="#888888"/>
             </LinearLayout>

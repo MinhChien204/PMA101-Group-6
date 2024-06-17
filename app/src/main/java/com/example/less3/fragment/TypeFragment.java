@@ -3,12 +3,14 @@ package com.example.less3.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.less3.R;
 import com.example.less3.adapter.TypeAdapter;
@@ -25,49 +27,50 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TypeFragment extends Fragment {
-    ApiService apiService;
-    List<Type> list;
-    TypeAdapter adapter;
-    RecyclerView recyclerView;
+    ImageView imgpolo,imghoodie,imgaokhoac,imgsomi;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type, container, false);
-        recyclerView = view.findViewById(R.id.rcv_theloai);
+        imgaokhoac = view.findViewById(R.id.imgaokhoac);
+        imghoodie = view.findViewById(R.id.imgaoHoodies);
+        imgpolo = view.findViewById(R.id.imgaopolo);
+        imgsomi = view.findViewById(R.id.imgaosomi);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Config.ip)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-
-        loadData();
-
+        imgpolo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new PoloFragment());
+            }
+        });
+        imgaokhoac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new AoKhoacFragment());
+            }
+        });
+        imghoodie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new HoodiesFragment());
+            }
+        });
+        imgsomi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new SoMiFragment());
+            }
+        });
         return view;
     }
 
-    private void loadData() {
-        Call<List<Type>> call = apiService.getType();
-        call.enqueue(new Callback<List<Type>>() {
-            @Override
-            public void onResponse(Call<List<Type>> call, Response<List<Type>> response) {
-                if (response.isSuccessful()) {
-                    list = response.body();
-                    if (list != null && !list.isEmpty()) {
-                        adapter = new TypeAdapter(list, getContext(), TypeFragment.this);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        recyclerView.setAdapter(adapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Type>> call, Throwable throwable) {
-                // Handle failure here
-            }
-        });
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.framelayout, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
+
 }

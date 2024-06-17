@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.less3.R;
 import com.example.less3.adapter.CartAdapter;
+import com.example.less3.model.Cart;
+import com.example.less3.retrofit.ApiService;
+import com.example.less3.retrofit.Config;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CartFragment extends Fragment {
 
@@ -26,6 +38,7 @@ public class CartFragment extends Fragment {
     private TextView totalPrice;
     private Button paymentButton;
     RecyclerView recyclerView;
+    ApiService apiService;
 
     @Nullable
     @Override
@@ -38,6 +51,17 @@ public class CartFragment extends Fragment {
         totalPrice = view.findViewById(R.id.total_price);
         paymentButton = view.findViewById(R.id.payment_button);
         recyclerView = view.findViewById(R.id.rcv_listcart);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Config.ip)  // Replace with your backend base URL
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Create service interface for API endpoints
+         apiService = retrofit.create(ApiService.class);
+
+         loaddata();
+
 
         // Kiểm tra xem giỏ hàng có rỗng hay không
         if (cartIsEmpty()) {
@@ -78,4 +102,58 @@ public class CartFragment extends Fragment {
         // Thay thế logic này bằng code lấy tổng giá thực tế
         return "0"; // Giả sử tổng giá là 0
     }
+    private void loaddata() {
+        Call<List<Cart>> call = apiService.getCart();
+        call.enqueue(new Callback<List<Cart>>() {
+            @Override
+            public void onResponse(Call<List<Cart>> call, Response<List<Cart>> response) {
+                if (response.isSuccessful()) {
+                    List<Cart> cartItems = response.body();
+                    if (cartItems != null && !cartItems.isEmpty()) {
+//                        CartAdapter cartAdapter = new CartAdapter(cartItems);
+//                        recyclerView.setAdapter(cartAdapter);
+
+                        // Cập nhật các phần tử UI dựa trên dữ liệu đã lấy được
+                        emptyCartImage.setVisibility(View.GONE);
+                        cartInfoLayout.setVisibility(View.VISIBLE);
+                        itemCount.setText(String.valueOf(getItemCount(cartItems)));
+                        totalPrice.setText(getTotalPrice(cartItems) + "$");
+                    } else {
+                        // Xử lý khi giỏ hàng trống
+                        emptyCartImage.setVisibility(View.VISIBLE);
+                        cartInfoLayout.setVisibility(View.GONE);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Lỗi khi tải thông tin giỏ hàng", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Cart>> call, Throwable throwable) {
+                Toast.makeText(getContext(), "Lỗi: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private int getItemCount(List<Cart> cartItems) {
+        return cartItems.size();
+    }
+
+    private String getTotalPrice(List<Cart> cartItems) {
+        double totalPrice = 0;
+        for (Cart item : cartItems) {
+//            totalPrice += item.getProductquantity_item() * item.getProductprice_item();
+        }
+        return String.format("%.2f", totalPrice);
+    }
+
+//    private String calculateTotalPrice(List<Cart> cartItems) {
+//        // Implement your logic to calculate total price from cartItems
+//        // Example:
+//        double totalPrice = 0;
+//        for (Cart item : cartItems) {
+//            totalPrice += item.getPrice();
+//        }
+//        return String.format("%.2f", totalPrice); // Format to two decimal places
+//    }
 }
