@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -44,6 +45,7 @@ public class DangKyActivity extends AppCompatActivity {
     ImageView avatar;
     private File file;
     ApiService apiService;
+    TextView tvlogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +57,7 @@ public class DangKyActivity extends AppCompatActivity {
         edphone = findViewById(R.id.edphone);
         edaddress = findViewById(R.id.edaddress);
         avatar = findViewById(R.id.imageAvatar);
+        tvlogin= findViewById(R.id.tvlogin);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiService.DOMAIN)
@@ -62,6 +65,12 @@ public class DangKyActivity extends AppCompatActivity {
                 .build();
         apiService = retrofit.create((ApiService.class));
 
+        tvlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DangKyActivity.this, DangNhapActivity.class);
+            }
+        });
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
