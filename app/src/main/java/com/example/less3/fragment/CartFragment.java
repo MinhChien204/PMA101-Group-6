@@ -39,6 +39,7 @@ public class CartFragment extends Fragment {
     private Button paymentButton;
     RecyclerView recyclerView;
     ApiService apiService;
+    List<Cart> list;
 
     @Nullable
     @Override
@@ -79,8 +80,8 @@ public class CartFragment extends Fragment {
         }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        final CartAdapter cartAdapter = new CartAdapter();
-        recyclerView.setAdapter(cartAdapter);
+//        final CartAdapter cartAdapter = new CartAdapter(list,getContext());
+//        recyclerView.setAdapter(cartAdapter);
 
         return view;
     }
@@ -110,39 +111,59 @@ public class CartFragment extends Fragment {
                 if (response.isSuccessful()) {
                     List<Cart> cartItems = response.body();
                     if (cartItems != null && !cartItems.isEmpty()) {
-//                        CartAdapter cartAdapter = new CartAdapter(cartItems);
-//                        recyclerView.setAdapter(cartAdapter);
+                        CartAdapter cartAdapter = new CartAdapter(cartItems, getContext());
+                        cartAdapter.setOnItemClickListener(position -> {
+                            Cart cartItem = cartItems.get(position);
+                            deleteCartItem(cartItem.get_id(), position, cartAdapter);
+                        });
+                        recyclerView.setAdapter(cartAdapter);
 
-                        // Cập nhật các phần tử UI dựa trên dữ liệu đã lấy được
+                        // Update UI based on the cart data
                         emptyCartImage.setVisibility(View.GONE);
                         cartInfoLayout.setVisibility(View.VISIBLE);
-                        itemCount.setText(String.valueOf(getItemCount(cartItems)));
+                        itemCount.setText(String.valueOf(cartItems.size()));
                         totalPrice.setText(getTotalPrice(cartItems) + "$");
                     } else {
-                        // Xử lý khi giỏ hàng trống
+                        // Handle empty cart
                         emptyCartImage.setVisibility(View.VISIBLE);
                         cartInfoLayout.setVisibility(View.GONE);
                     }
                 } else {
-                    Toast.makeText(getContext(), "Lỗi khi tải thông tin giỏ hàng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to load cart information", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Cart>> call, Throwable throwable) {
-                Toast.makeText(getContext(), "Lỗi: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private int getItemCount(List<Cart> cartItems) {
-        return cartItems.size();
+    private void deleteCartItem(String itemId, int position, CartAdapter cartAdapter) {
+        Call<Void> call = apiService.deleteCart(itemId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    cartAdapter.removeCartItem(position);
+                    Toast.makeText(getContext(), "Item removed from cart", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Failed to remove item", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private String getTotalPrice(List<Cart> cartItems) {
         double totalPrice = 0;
         for (Cart item : cartItems) {
-//            totalPrice += item.getProductquantity_item() * item.getProductprice_item();
+            totalPrice += item.getProductquantity_item() * item.getProductPrice_item();
         }
         return String.format("%.2f", totalPrice);
     }

@@ -60,6 +60,8 @@ public interface ApiService {
     Call<List<Cart>> getCart();
     @POST("api/cart")
     Call<Void> addToCart(@Body Cart cartItem);
+    @DELETE("api/cart/{id}")
+    Call<Void> deleteCart(@Path("id") String itemId);
     @Multipart
     @POST("api/register-send-email")
     Call<Response<User>> register(
@@ -85,6 +87,8 @@ public interface ApiService {
     Call<List<Aopolo>> getAopolo();
     @GET("api/somi")
     Call<List<Aosomi>> getAosomi();
+
+    
 
 
 

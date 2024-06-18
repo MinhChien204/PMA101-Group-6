@@ -1,6 +1,6 @@
 package com.example.less3.adapter;
 
-// CartAdapter.java
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.less3.R;
-import com.example.less3.model.Clothes;
+import com.example.less3.model.Cart;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private List<Clothes> cartItems = new ArrayList<>();
+    private List<Cart> cartItems;
+    private Context context;
+    private OnItemClickListener listener;
+
+    public CartAdapter(List<Cart> cartItems, Context context) {
+        this.cartItems = cartItems;
+        this.context = context;
+    }
+
+    public interface OnItemClickListener {
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @NonNull
     @Override
@@ -30,12 +44,27 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        Clothes cloth = cartItems.get(position);
-        holder.tvName.setText(cloth.getName_cloth());
-        holder.tvPrice.setText(String.valueOf(cloth.getPrice_cloth()) + "$");
+        Cart cartItem = cartItems.get(position);
+
         Glide.with(holder.itemView.getContext())
-                .load(cloth.getImage_cloth())
-                .into(holder.imgAvatar);
+                .load(cartItem.getProductImage_item())
+                .into(holder.imgProduct);
+        holder.tvProductName.setText(cartItem.getProductName_item());
+        holder.tvProductPrice.setText(String.valueOf(cartItem.getProductPrice_item()));
+        holder.tvProductSize.setText(cartItem.getProductsize_item());
+        holder.tvProductQuantity.setText(String.valueOf(cartItem.getProductquantity_item()));
+
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onDeleteClick(position);
+            }
+        });
+    }
+
+    public void removeCartItem(int position) {
+        cartItems.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, cartItems.size());
     }
 
     @Override
@@ -43,17 +72,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return cartItems.size();
     }
 
-
     static class CartViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvPrice;
-        ImageView imgAvatar,btnDelete;
-
+        ImageView imgProduct, btnDelete;
+        TextView tvProductName, tvProductPrice, tvProductSize, tvProductQuantity;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.product_name);
-            tvPrice = itemView.findViewById(R.id.product_size);
-            imgAvatar = itemView.findViewById(R.id.product_image);
+            tvProductName = itemView.findViewById(R.id.product_name);
+            tvProductSize = itemView.findViewById(R.id.product_size);
+            tvProductPrice = itemView.findViewById(R.id.product_price);
+            imgProduct = itemView.findViewById(R.id.product_image);
+            tvProductQuantity = itemView.findViewById(R.id.quantity_text);
             btnDelete = itemView.findViewById(R.id.delete_button);
         }
     }

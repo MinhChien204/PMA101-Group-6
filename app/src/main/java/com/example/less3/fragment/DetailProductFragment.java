@@ -191,9 +191,9 @@ public class DetailProductFragment extends Fragment {
         cartItem.setProductid_item(cloth.get_id());
         cartItem.setProductsize_item(selectedSize);
         cartItem.setProductquantity_item(quantity);
-        cartItem.setProductimage_item(cloth.getImage_cloth());
-        cartItem.setProductname_item(cloth.getName_cloth());
-        cartItem.setProductprice_item(cloth.getPrice_cloth());
+        cartItem.setProductImage_item(cloth.getImage_cloth());
+        cartItem.setProductName_item(cloth.getName_cloth());
+        cartItem.setProductPrice_item(cloth.getPrice_cloth());
 
         Call<Void> call = apiService.addToCart(cartItem);
         call.enqueue(new Callback<Void>() {
