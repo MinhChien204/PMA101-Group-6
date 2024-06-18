@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.example.less3.R;
 import com.example.less3.activity.MainActivity;
+import com.example.less3.model.User;
 
 
 public class MyProfileFragment extends Fragment {
@@ -35,4 +37,5 @@ public class MyProfileFragment extends Fragment {
             ((MainActivity) getActivity()).bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
+
 }
