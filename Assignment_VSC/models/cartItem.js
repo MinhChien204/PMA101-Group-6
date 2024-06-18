@@ -12,10 +12,10 @@ const CartItemSchema = mongoose.Schema({
     productquantity_item:{
         type:Number
     },
-    productName_item:{
+    productImage_item:{
         type:String
     },
-    productImage_item:{
+    productName_item:{
         type:String
     },
     productPrice_item:{

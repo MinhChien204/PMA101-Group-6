@@ -64,7 +64,7 @@ router.get("/cart", async (req, res) => {
 });
 
 //APi thêm vào giỏ hàng
-router.post("/addtocart", async (req, res) => {
+router.post("/cart", async (req, res) => {
   try {
     const { productid_item, productsize_item, productquantity_item,productName_item,productImage_item,productPrice_item } = req.body;
 
@@ -76,8 +76,8 @@ router.post("/addtocart", async (req, res) => {
       productid_item,
       productsize_item,
       productquantity_item,
-      productName_item,
       productImage_item,
+      productName_item,
       productPrice_item
     });
 
@@ -88,6 +88,51 @@ router.post("/addtocart", async (req, res) => {
     res
       .status(500)
       .send({ error: "An error occurred while adding cart" });
+  }
+});
+//APi sửa item trong giỏ hàng
+router.put("/cart/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { productid_item, productsize_item, productquantity_item,productImage_item,productName_item,productPrice_item } = req.body;
+
+    const updateCart = await cartItemModel.findByIdAndUpdate(id, {
+      productid_item,
+      productsize_item,
+      productquantity_item,
+      productImage_item,
+      productName_item,
+      productPrice_item,
+    }, { new: true });
+
+    if (updateCart) {
+      res.json({
+        status: 200,
+        message: "cartitem updated successfully",
+        data: updateCart,
+      });
+    } else {
+      res.status(404).json({ message: "cartitem not found" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while updating cartitem" });
+  }
+});
+//APi xóa item trong giỏ hàng
+router.delete("/cart/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleteCart = await cartItemModel.findByIdAndDelete(id);
+
+    if (deleteCart) {
+      res.json({ message: "Cartitem deleted successfully" });
+    } else {
+      res.status(404).json({ message: "cartitem not found" });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "An error occurred while deleting cartitem" });
   }
 });
 
@@ -155,7 +200,7 @@ router.put("/users/:id", async (req, res) => {
     const { id } = req.params;
     const { username, password, email, name, phonenumber, address, avartar } = req.body;
 
-    const updatedUser = await users.findByIdAndUpdate(id, {
+    const updateCart = await users.findByIdAndUpdate(id, {
       username,
       password,
       email,
@@ -165,11 +210,11 @@ router.put("/users/:id", async (req, res) => {
       avartar,
     }, { new: true });
 
-    if (updatedUser) {
+    if (updateCart) {
       res.json({
         status: 200,
         message: "User updated successfully",
-        data: updatedUser,
+        data: updateCart,
       });
     } else {
       res.status(404).json({ message: "User not found" });
@@ -184,9 +229,9 @@ router.put("/users/:id", async (req, res) => {
 router.delete("/users/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedUser = await users.findByIdAndDelete(id);
+    const deleteCart = await users.findByIdAndDelete(id);
 
-    if (deletedUser) {
+    if (deleteCart) {
       res.json({ message: "User deleted successfully" });
     } else {
       res.status(404).json({ message: "User not found" });
